@@ -5,23 +5,35 @@ format: html
 editor: visual
 ---
 
-## Quarto
+### Using R as GIS
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+I want to preface this by pointing out that R is not a GIS. It can handle spatial data, but there are some things that are just not as efficient as using an actual GIS, like ArcGIS Pro or QGIS.
 
-## Running Code
+### Packages for handing spatial data in R
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.
 
-```{r}
-1 + 1
-```
+-   `sf` : asdfasdf
+-   `terra` : Supersedes the `raster` package. Is much faster.
+-   `stars` : another option for handing raster data
+-   These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.
 
-You can add options to executable code like this
+This demo will use the `terra` package, as well as an extension, `tidyterra` to leverage `ggplot2`'s elegant plotting. We will also make use of the `exactextractr` package to extend some of the `terra`'s main functions.
 
-```{r}
-#| echo: false
-2 * 2
-```
+### Types of spatial data
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Vector
+
+Raster
+
+### How this guide is organized
+
+Demonstrate workflow in ArcGIS
+
+Demonstrate the same workflow in R
+
+Note: Material for this guide was liberally borrowed from J. Frair's Landscape Ecology course (EFB ), which in turn had liberally borrowed from ...
+
+## Using ArcGIS Pro (v. 3.3.0)
+
+## Using R (v. 4.4.2)
