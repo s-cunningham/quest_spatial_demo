@@ -32,8 +32,60 @@ Demonstrate workflow in ArcGIS
 
 Demonstrate the same workflow in R
 
-Note: Material for this guide was liberally borrowed from J. Frair's Landscape Ecology course (EFB ), which in turn had liberally borrowed from ...
+Note: Material for this guide was liberally borrowed from Jacqui Frair's Landscape Ecology course at SUNY ESF, which in turn had liberally borrowed from ...
 
 ## Using ArcGIS Pro (v. 3.3.0)
 
+1.  Reading in a raster
+
+Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).
+
+![The 'Add Data' Button (circled in orange) can be found in the Map menu](images/Screenshot 2025-03-10 140217.png)
+
 ## Using R (v. 4.4.2)
+
+klj;asdkfj
+
+l;kjas;ldkf
+
+```{r}
+#| eval: false
+library(terra)
+
+# Read in a raster using the rast() function
+r1 <- rast("data/.tif")
+
+# Plot it quickly to get an idea of what we're working with
+plot(r1)
+
+# Check the coordinate reference system (projection)
+crs(r1)
+
+
+
+
+```
+
+Sometimes we need to reproject rasters, even though this can result in this getting a little wonky (warping squares and all that). The `terra` package feels better about reprojecting rasters when it has another raster it can match the first one to. That is, we're probably going to need to do at least a bit of resampling, so `terra` would rather have a template when it does that.
+
+```{r}
+#| eval: false
+# read in a new raster (different projection)
+r2 <- rast("data/.tif")
+
+# plot it
+plot(r2)
+
+# Reproject r1 to match the projection of r1
+r1 <- project(r1, r2)
+
+```
+
+We can also combine multiple rasters into a "stack" , which is what it was known as in the `raster` package. We can do the same thing in `terra` but don't explicitly call it a "stack" like we did in `raster`.
+
+```{r}
+#| eval: false
+# Instead, we just use the c() function
+rast_list <- c()
+layers <- rast(rast_list)
+```
