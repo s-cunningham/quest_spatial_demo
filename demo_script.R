@@ -4,6 +4,10 @@ library(tidyterra)
 
 theme_set(theme_bw())
 
+elc <- vect("efb650_data/elc.shp")
+elc <- elc[,c(1:17, 24, 36)]
+names(elc)[18] <- "MOOSE"
+
 # Set up a color palette so that we don't have to copy it into our code so many times
 pal <- c("#F7FCF0","#E0F3DB","#CCEBC5","#A8DDB5","#7BCCC4","gray","#4EB3D3","#2B8CBE","#0868AC","#084081")
 
@@ -103,7 +107,7 @@ disturbed_m <- expanse(buffunion) # Note that this returns values in m^2
 
 # convert to km2
 disturbed_km <- disturbed_m / 1000 / 1000
-disturbed_km
+disturbed_km # print area to console
 
 # Visualize on full map
 ggplot() +
@@ -117,10 +121,25 @@ ggplot() +
 
 ### Now let's see how this disturbance impacts wolverine habitat
 
+elc$WOLVERINE
 
+ggplot() +
+  geom_spatvector(data=elc, aes(fill=WOLVERINE))
 
+# Filter using square bracket indexing
+wolv <- elc[elc$WOLVERINE==4 | elc$WOLVERINE==5,]
+ggplot() +
+  geom_spatvector(data=wolv, aes(fill=factor(WOLVERINE)))
 
+# How much area is there?
+sum(expanse(wolv)) / 1000 / 1000 # convert to km2
 
+## Let's clip it by the disturbance area
+wolv_dist <- crop(wolv, buffunion)
+plot(wolv_dist)
+
+# how much area is being disturbed?
+sum(expanse(wolv_dist)) / 1000 / 1000 # convert to km2
 
 
 
@@ -134,9 +153,44 @@ dem <- rast("efb650_data/dem.tif")
 # Rivers
 rivers <- vect("efb650_data/rivers.shp")
 
+## Let's plot them
+# take a look at the raster by itself
+ggplot() +
+  geom_spatraster(data=dem) +
+  scale_fill_cross_blended_c(palette="cold_humid") # adjust the color scale using tidyterra
+  
+# Now all three layers
+ggplot() +
+  geom_spatraster(data=dem) +
+  scale_fill_cross_blended_c(palette="cold_humid") + # adjust the color scale using tidyterra
+  geom_spatvector(data=elc, fill=NA, color="gray40") +
+  geom_spatvector(data=rivers, color="blue", linewidth=1)
 
+# Now let's take a look at the ELC layer as viewed by moose
+ggplot() +
+  geom_spatvector(data=elc, aes(fill=factor(MOOSE)))
 
+# Convert polygon to raster grid
+moose <- rasterize(elc, dem, field="MOOSE")
+plot(moose) # Plot to check
 
+# Look at the raster info
+moose
+dem
 
+# We want to relabel the moose raster to reflect suitability. To do this, we will set the color table.
+# does it already have a color table?
+coltab(moose) 3
+
+# Set up NLCD classes and class values
+moose_values <- c(1, 3, 4, 5, 6, 7)
+moose_class <- c("Poor", "Low", "Fair", "Good", "High", "Water")
+
+# Add class names and numbers to the raster
+levels(moose) <- list(data.frame(ID = moose_values,
+                                 suitability = moose_class))
+
+# Plot
+moose
 
 
