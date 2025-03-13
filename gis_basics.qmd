@@ -1,5 +1,5 @@
 ---
-title: "GIS Basics in R and ArcGIS Pro"
+title: "GIS Basics in ArcGIS Pro and R"
 author: "Stephanie Cunningham"
 format: html
 editor: visual
@@ -32,25 +32,41 @@ Demonstrate workflow in ArcGIS
 
 Demonstrate the same workflow in R
 
-Note: Material for this guide was liberally borrowed from Jacqui Frair's Landscape Ecology course at SUNY ESF, which in turn had liberally borrowed from ...
+*Note:* Material for this guide was liberally borrowed from Jacqui Frair's Landscape Ecology course (EFB650) at SUNY College of Environmental Science and Forestry, which was based on materials from Charlene Nielsen and Evelyn Merrill, University of Alberta.
+
+### Objectives
+
+1.  Import vector (points, lines, polygons) and raster data, visualize
+2.  Check spatial reference and reproject
+3.  
 
 ## Using ArcGIS Pro (v. 3.3.0)
 
-1.  Reading in a raster
+### 1. Importing data
 
 Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).
 
-![The 'Add Data' Button (circled in orange) can be found in the Map menu](images/Screenshot 2025-03-10 140217.png)
+![The 'Add Data' Button (circled in orange) can be found in the Map menu](images/Screenshot%202025-03-10%20140217.png)
+
+Creating buffer
 
 ## Using R (v. 4.4.2)
 
 klj;asdkfj
 
-l;kjas;ldkf
-
 ```{r}
 #| eval: false
 library(terra)
+
+# Terra makes it easy to read in a shapefile with the vect() function
+adk <- vect("data/.shp")
+
+```
+
+Now let's read in a raster
+
+```{r}
+#| eval: false
 
 # Read in a raster using the rast() function
 r1 <- rast("data/.tif")
@@ -81,7 +97,7 @@ r1 <- project(r1, r2)
 
 ```
 
-We can also combine multiple rasters into a "stack" , which is what it was known as in the `raster` package. We can do the same thing in `terra` but don't explicitly call it a "stack" like we did in `raster`.
+We can also combine multiple rasters into a "stack" , which is what it was known as in the `raster` package, if we want to do the same thing to multiple rasters. We can do the same thing in `terra` but don't explicitly call it a "stack" like we did in `raster`.
 
 ```{r}
 #| eval: false

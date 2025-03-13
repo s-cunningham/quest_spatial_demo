@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephanie Cunningham">
 
-<title>GIS Basics in R and ArcGIS Pro</title>
+<title>GIS Basics in ArcGIS Pro and R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">GIS Basics in R and ArcGIS Pro</h1>
+<h1 class="title">GIS Basics in ArcGIS Pro and R</h1>
 </div>
 
 
@@ -127,13 +127,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="how-this-guide-is-organized">How this guide is organized</h3>
 <p>Demonstrate workflow in ArcGIS</p>
 <p>Demonstrate the same workflow in R</p>
-<p>Note: Material for this guide was liberally borrowed from Jacqui Frair’s Landscape Ecology course at SUNY ESF, which in turn had liberally borrowed from …</p>
+<p><em>Note:</em> Material for this guide was liberally borrowed from Jacqui Frair’s Landscape Ecology course at SUNY College of Environmental Science and Forestry, which was based on materials from Charlene Nielsen and Evelyn Merrill, University of Alberta.</p>
 </section>
 <section id="using-arcgis-pro-v.-3.3.0" class="level2">
 <h2 class="anchored" data-anchor-id="using-arcgis-pro-v.-3.3.0">Using ArcGIS Pro (v. 3.3.0)</h2>
-<ol type="1">
-<li>Reading in a raster</li>
-</ol>
+<section id="reading-in-data" class="level3">
+<h3 class="anchored" data-anchor-id="reading-in-data">Reading in data</h3>
 <p>Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -141,33 +140,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>The ‘Add Data’ Button (circled in orange) can be found in the Map menu</figcaption>
 </figure>
 </div>
+<p>Creating buffer</p>
+</section>
 </section>
 <section id="using-r-v.-4.4.2" class="level2">
 <h2 class="anchored" data-anchor-id="using-r-v.-4.4.2">Using R (v. 4.4.2)</h2>
 <p>klj;asdkfj</p>
-<p>l;kjas;ldkf</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in a raster using the rast() function</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/.tif"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot it quickly to get an idea of what we're working with</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r1)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the coordinate reference system (projection)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Terra makes it easy to read in a shapefile with the vect() function</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>adk <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"data/.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s read in a raster</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in a raster using the rast() function</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/.tif"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot it quickly to get an idea of what we're working with</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r1)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the coordinate reference system (projection)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Sometimes we need to reproject rasters, even though this can result in this getting a little wonky (warping squares and all that). The <code>terra</code> package feels better about reprojecting rasters when it has another raster it can match the first one to. That is, we’re probably going to need to do at least a bit of resampling, so <code>terra</code> would rather have a template when it does that.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a new raster (different projection)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/.tif"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r2)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject r1 to match the projection of r1</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">project</span>(r1, r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a new raster (different projection)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/.tif"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r2)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject r1 to match the projection of r1</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">project</span>(r1, r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also combine multiple rasters into a “stack” , which is what it was known as in the <code>raster</code> package. We can do the same thing in <code>terra</code> but don’t explicitly call it a “stack” like we did in <code>raster</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead, we just use the c() function</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rast_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>layers <span class="ot">&lt;-</span> <span class="fu">rast</span>(rast_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
