@@ -54,6 +54,8 @@ Creating buffer
 
 klj;asdkfj
 
+Note that we create a lot of files when we went through this in ArcGIS, but we don't have to do this in R (but you could if you wanted to...I just skipped a lot of these).
+
 ```{r}
 #| eval: false
 library(terra)
