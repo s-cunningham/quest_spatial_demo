@@ -4,9 +4,12 @@ library(tidyterra)
 
 theme_set(theme_bw())
 
-elc <- vect("efb650_data/elc.shp")
-elc <- elc[,c(1:17, 24, 36)]
-names(elc)[18] <- "MOOSE"
+# # Modified
+# elc <- vect("efb650_data/elc.shp")
+# elc <- elc[,c(1:17, 24, 36)]
+# names(elc)[18] <- "MOOSE"
+# elc <- project(elc, "EPSG:4326")
+# writeVector(elc, "efb650_data/elc.shp", overwrite=TRUE)
 
 # Set up a color palette so that we don't have to copy it into our code so many times
 pal <- c("#F7FCF0","#E0F3DB","#CCEBC5","#A8DDB5","#7BCCC4","gray","#4EB3D3","#2B8CBE","#0868AC","#084081")
@@ -20,6 +23,26 @@ elc <- vect("efb650_data/elc.shp")
 trails <- vect("efb650_data/trails.shp")
 # Camp sites in the Clearwater River Watershed 
 camp <- vect("efb650_data/camp.shp")
+
+## Check the spatial reference
+elc
+crs(elc)
+
+camp
+crs(camp)
+
+trails
+crs(trails)
+
+## Does the CRS match up between layers?
+crs(elc)==crs(camp)
+crs(elc)==crs(trails) 
+crs(camp)==crs(trails) # Looks like elc is the problem. Let's reproject it
+
+# Reproject elc to camp CRS
+elc <- project(elc, crs(camp))
+# Check it
+crs(elc)==crs(camp)
 
 ## Let's plot
 ggplot() +
@@ -120,13 +143,14 @@ ggplot() +
   theme(legend.position="none")
 
 ### Now let's see how this disturbance impacts wolverine habitat
-
+# IF we look at just the wolverine column, it has categorical 
 elc$WOLVERINE
 
+# Plot
 ggplot() +
   geom_spatvector(data=elc, aes(fill=WOLVERINE))
 
-# Filter using square bracket indexing
+# Filter using square bracket indexing (these are the most suitable categories)
 wolv <- elc[elc$WOLVERINE==4 | elc$WOLVERINE==5,]
 ggplot() +
   geom_spatvector(data=wolv, aes(fill=factor(WOLVERINE)))
@@ -141,7 +165,7 @@ plot(wolv_dist)
 # how much area is being disturbed?
 sum(expanse(wolv_dist)) / 1000 / 1000 # convert to km2
 
-
+# about 5%
 
 #### Section 2: Raster Data ####
 
@@ -153,7 +177,13 @@ dem <- rast("efb650_data/dem.tif")
 # Rivers
 rivers <- vect("efb650_data/rivers.shp")
 
-## Let's plot them
+# Check CRS
+crs(elc)==crs(dem)
+# Reproject 
+elc <- project(elc, crs(rivers))
+crs(elc)==crs(rivers)
+
+## Let's plot dem## Let's plot them
 # take a look at the raster by itself
 ggplot() +
   geom_spatraster(data=dem) +
@@ -178,11 +208,9 @@ plot(moose) # Plot to check
 moose
 dem
 
-# We want to relabel the moose raster to reflect suitability. To do this, we will set the color table.
-# does it already have a color table?
-coltab(moose) 3
+# We want to relabel the moose raster to reflect suitability. 
 
-# Set up NLCD classes and class values
+# Set up raster values and classes
 moose_values <- c(1, 3, 4, 5, 6, 7)
 moose_class <- c("Poor", "Low", "Fair", "Good", "High", "Water")
 
@@ -190,7 +218,32 @@ moose_class <- c("Poor", "Low", "Fair", "Good", "High", "Water")
 levels(moose) <- list(data.frame(ID = moose_values,
                                  suitability = moose_class))
 
-# Plot
-moose
+# Now we want to specify specify colors by level
+coltb <- data.frame(value=moose_values, col=c("#d01c8b", "#f1b6da", "#f7f7f7", "#b8e186", "#4dac26", "#0570b0"))
+# add color table
+coltab(moose) <- coltb
 
+# Plot
+ggplot() +
+  geom_spatraster(data=moose) +
+  # Note that we have to specify data for the color table again
+  scale_fill_coltab(data=moose, na.translate = FALSE, name="Suitability")
+
+
+### Reclassifying a raster
+# First, we want to create a raster based on dominant vegetation
+domveg <- rasterize(elc, dem, field="DOMVEG")
+
+# Plot, and note that because the column in the vector was categorical, we don't have to change the raster from numeric values to categorical
+plot(domveg)
+
+# Print out a list of the vegetation types
+unique(domveg)
+
+# Build 'from-to' matrix
+rcl <- as.matrix(data.frame(from=unique(domveg)$DOMVEG, 
+                            to=c("Meadow","Shrub","Forest","Forest","Meadow",
+                                 "Nonvegetated","Forest", "Forest","Forest", "Shrub")))
+
+domveg <- classify(domveg, rcl)
 
