@@ -13,12 +13,12 @@ I want to preface this by pointing out that R is not a GIS. It can handle spatia
 
 There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.
 
--   `sf` : asdfasdf
--   `terra` : Supersedes the `raster` package. Is much faster.
+-   `terra` : Supersedes the `raster` package and is much faster. Also allows manipulation of vector data.
+-   `sf` : Package for working with 'simple features'.
 -   `stars` : another option for handing raster data
 -   These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.
 
-This demo will use the `terra` package, as well as an extension, `tidyterra` to leverage `ggplot2`'s elegant plotting. We will also make use of the `exactextractr` package to extend some of the `terra`'s main functions.
+This demo will use the `terra` package. We will also use the `tidyterra` and `ggspatial` packages to leverage `ggplot2`'s elegant plotting. We will also make use of the `exactextractr` package to extend some of the `terra`'s main functions.
 
 ### Types of spatial data
 
@@ -32,7 +32,7 @@ Demonstrate workflow in ArcGIS
 
 Demonstrate the same workflow in R
 
-*Note:* Material for this guide was liberally borrowed from Jacqui Frair's Landscape Ecology course (EFB650) at SUNY College of Environmental Science and Forestry, which was based on materials from Charlene Nielsen and Evelyn Merrill, University of Alberta.
+*Note:* Material for this guide was liberally borrowed from Labs 2 and 3 of Jacqui Frair's Landscape Ecology course (EFB650) at SUNY College of Environmental Science and Forestry, which was based on materials developed by Charlene Nielsen and Evelyn Merrill at the University of Alberta.
 
 ### Objectives
 
@@ -42,13 +42,39 @@ Demonstrate the same workflow in R
 
 ## Using ArcGIS Pro (v. 3.3.0)
 
+The new
+
+![](images/Screenshot 2025-03-17 121349-01.png)
+
 ### 1. Importing data
 
 Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).
 
 ![The 'Add Data' Button (circled in orange) can be found in the Map menu](images/Screenshot%202025-03-10%20140217.png)
 
+### Check Spatial Reference
+
+Right click on each layer in the table of contents. Go to the bottom of the menu and click on Properties. In the properties menu, click on **Source** on the left, and then expand the **Spatial Reference** menu. Do this for all three layers.
+
+![](images/Screenshot 2025-03-17 143818.png)
+
+It appears that one of the layers does not have the same projection as the other two. While they look fine (ArcGIS shown them as if they all have the same spatial reference), we might run into problems if we start doing analyses on layers that have different coordinate systems. We will reproject the \[ECL\] layer to match the other two.
+
+Under the Analysis tab along the top ribbon, click on Tools (the red toolbox icon). It should open the Geoprocessing pane on the right side of your map. Click on the Toolboxes tab, then go to Data Management Tools \> Projections and Transformations \> Project.
+
+![](images/Screenshot 2025-03-17 144303.png)
+
+Alternatively, you can use the search bar and type in 'project'. It should show you the name of the project tool, as well as the location. Make sure to select the one named "Project' and not 'Project Raster' (but note that they are both within Data Management Tools.
+
+![](images/Screenshot 2025-03-17 144538.png)
+
+### Symbology
+
+![](images/Screenshot 2025-03-17 143428.png)
+
 Creating buffer
+
+### Creating a nice-looking map
 
 ## Using R (v. 4.4.2)
 

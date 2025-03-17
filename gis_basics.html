@@ -111,8 +111,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="packages-for-handing-spatial-data-in-r">Packages for handing spatial data in R</h3>
 <p>There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.</p>
 <ul>
-<li><code>sf</code> : asdfasdf</li>
-<li><code>terra</code> : Supersedes the <code>raster</code> package. Is much faster.</li>
+<li><code>terra</code> : Supersedes the <code>raster</code> package and is much faster. Also allows manipulation of vector data.</li>
+<li><code>sf</code> : Package for working with ‘simple features’.</li>
 <li><code>stars</code> : another option for handing raster data</li>
 <li>These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.</li>
 </ul>
@@ -127,12 +127,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="how-this-guide-is-organized">How this guide is organized</h3>
 <p>Demonstrate workflow in ArcGIS</p>
 <p>Demonstrate the same workflow in R</p>
-<p><em>Note:</em> Material for this guide was liberally borrowed from Jacqui Frair’s Landscape Ecology course at SUNY College of Environmental Science and Forestry, which was based on materials from Charlene Nielsen and Evelyn Merrill, University of Alberta.</p>
+<p><em>Note:</em> Material for this guide was liberally borrowed from Labs 2 and 3 of Jacqui Frair’s Landscape Ecology course (EFB650) at SUNY College of Environmental Science and Forestry, which was based on materials developed by Charlene Nielsen and Evelyn Merrill at the University of Alberta.</p>
+</section>
+<section id="objectives" class="level3">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<ol type="1">
+<li>Import vector (points, lines, polygons) and raster data, visualize</li>
+<li>Check spatial reference and reproject</li>
+<li></li>
+</ol>
 </section>
 <section id="using-arcgis-pro-v.-3.3.0" class="level2">
 <h2 class="anchored" data-anchor-id="using-arcgis-pro-v.-3.3.0">Using ArcGIS Pro (v. 3.3.0)</h2>
-<section id="reading-in-data" class="level3">
-<h3 class="anchored" data-anchor-id="reading-in-data">Reading in data</h3>
+<p>The new</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-17%20121349.png" class="img-fluid figure-img"></p>
+<figcaption>Opening a new “project” in ArcGIS Pro</figcaption>
+</figure>
+</div>
+<section id="importing-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data">1. Importing data</h3>
 <p>Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -142,10 +157,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Creating buffer</p>
 </section>
+<section id="creating-a-nice-looking-map" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-nice-looking-map">Creating a nice-looking map</h3>
+</section>
 </section>
 <section id="using-r-v.-4.4.2" class="level2">
 <h2 class="anchored" data-anchor-id="using-r-v.-4.4.2">Using R (v. 4.4.2)</h2>
 <p>klj;asdkfj</p>
+<p>Note that we create a lot of files when we went through this in ArcGIS, but we don’t have to do this in R (but you could if you wanted to…I just skipped a lot of these).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -174,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject r1 to match the projection of r1</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">project</span>(r1, r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can also combine multiple rasters into a “stack” , which is what it was known as in the <code>raster</code> package. We can do the same thing in <code>terra</code> but don’t explicitly call it a “stack” like we did in <code>raster</code>.</p>
+<p>We can also combine multiple rasters into a “stack” , which is what it was known as in the <code>raster</code> package, if we want to do the same thing to multiple rasters. We can do the same thing in <code>terra</code> but don’t explicitly call it a “stack” like we did in <code>raster</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead, we just use the c() function</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rast_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
