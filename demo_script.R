@@ -83,7 +83,7 @@ w_camps <- elc[elc$poly_id %in% w_camps,]
 # Let's add these outlines to the plot
 # Note that the order of geoms defines drawing order, camps are on top to be able to see
 ggplot() +
-  geom_spatvector(data=elc, aes(fill=DOMVEG)) +
+  geom_spatvector(data=elc, aes(fill=DOMVEG), color=NA) +
   scale_fill_manual(values=pal) +
   geom_spatvector(data=trails, color="darkred", linewidth=1) +
   geom_spatvector(data=w_camps, fill=NA, color="hotpink", linewidth=1) +
@@ -141,6 +141,8 @@ ggplot() +
   geom_spatvector(data=buffunion, color="red", fill=NA, linewidth=0.5) +
   theme_void() +
   theme(legend.position="none")
+
+test <- gridDist(trails)
 
 ### Now let's see how this disturbance impacts wolverine habitat
 # IF we look at just the wolverine column, it has categorical 

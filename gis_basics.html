@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Stephanie Cunningham">
 
 <title>GIS Basics in ArcGIS Pro and R</title>
 <style>
@@ -72,10 +71,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#how-this-guide-is-organized" id="toc-how-this-guide-is-organized" class="nav-link active" data-scroll-target="#how-this-guide-is-organized">How this guide is organized</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#using-arcgis-pro-v.-3.3.0" id="toc-using-arcgis-pro-v.-3.3.0" class="nav-link" data-scroll-target="#using-arcgis-pro-v.-3.3.0">Using ArcGIS Pro (v. 3.3.0)</a>
+  <ul class="collapse">
+  <li><a href="#part-i-vector-data" id="toc-part-i-vector-data" class="nav-link" data-scroll-target="#part-i-vector-data">Part I: Vector Data</a>
+  <ul class="collapse">
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">1. Importing data</a></li>
+  <li><a href="#check-spatial-reference" id="toc-check-spatial-reference" class="nav-link" data-scroll-target="#check-spatial-reference">2. Check Spatial Reference</a></li>
+  <li><a href="#symbology" id="toc-symbology" class="nav-link" data-scroll-target="#symbology">3. Symbology</a></li>
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">4. Attributes</a></li>
+  <li><a href="#spatial-analysis" id="toc-spatial-analysis" class="nav-link" data-scroll-target="#spatial-analysis">5. Spatial Analysis</a></li>
+  <li><a href="#creating-final-map" id="toc-creating-final-map" class="nav-link" data-scroll-target="#creating-final-map">Creating Final Map</a></li>
+  </ul></li>
+  <li><a href="#part-ii-raster-data" id="toc-part-ii-raster-data" class="nav-link" data-scroll-target="#part-ii-raster-data">Part II: Raster Data</a>
+  <ul class="collapse">
+  <li><a href="#importing-data-1" id="toc-importing-data-1" class="nav-link" data-scroll-target="#importing-data-1">1. Importing Data</a></li>
+  <li><a href="#symbology-1" id="toc-symbology-1" class="nav-link" data-scroll-target="#symbology-1">2. Symbology</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#using-r-v.-4.4.2" id="toc-using-r-v.-4.4.2" class="nav-link" data-scroll-target="#using-r-v.-4.4.2">Using R (v. 4.4.2)</a>
+  <ul class="collapse">
+  <li><a href="#using-r-as-gis" id="toc-using-r-as-gis" class="nav-link" data-scroll-target="#using-r-as-gis">Using R as GIS</a>
+  <ul class="collapse">
+  <li><a href="#packages-for-handing-spatial-data-in-r" id="toc-packages-for-handing-spatial-data-in-r" class="nav-link" data-scroll-target="#packages-for-handing-spatial-data-in-r">Packages for handing spatial data in R</a></li>
+  </ul></li>
+  <li><a href="#part-i-vector-data-1" id="toc-part-i-vector-data-1" class="nav-link" data-scroll-target="#part-i-vector-data-1">Part I: Vector Data</a>
+  <ul class="collapse">
+  <li><a href="#importing-data-2" id="toc-importing-data-2" class="nav-link" data-scroll-target="#importing-data-2">1. Importing data</a></li>
+  </ul></li>
+  <li><a href="#part-ii-raster-data-1" id="toc-part-ii-raster-data-1" class="nav-link" data-scroll-target="#part-ii-raster-data-1">Part II: Raster Data</a>
+  <ul class="collapse">
+  <li><a href="#importing-data-3" id="toc-importing-data-3" class="nav-link" data-scroll-target="#importing-data-3">1. Importing Data</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -87,12 +127,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Stephanie Cunningham </p>
-          </div>
-  </div>
     
   
     
@@ -103,26 +137,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="using-r-as-gis" class="level3">
-<h3 class="anchored" data-anchor-id="using-r-as-gis">Using R as GIS</h3>
-<p>I want to preface this by pointing out that R is not a GIS. It can handle spatial data, but there are some things that are just not as efficient as using an actual GIS, like ArcGIS Pro or QGIS.</p>
-</section>
-<section id="packages-for-handing-spatial-data-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="packages-for-handing-spatial-data-in-r">Packages for handing spatial data in R</h3>
-<p>There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.</p>
-<ul>
-<li><code>terra</code> : Supersedes the <code>raster</code> package and is much faster. Also allows manipulation of vector data.</li>
-<li><code>sf</code> : Package for working with ‘simple features’.</li>
-<li><code>stars</code> : another option for handing raster data</li>
-<li>These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.</li>
-</ul>
-<p>This demo will use the <code>terra</code> package, as well as an extension, <code>tidyterra</code> to leverage <code>ggplot2</code>’s elegant plotting. We will also make use of the <code>exactextractr</code> package to extend some of the <code>terra</code>’s main functions.</p>
-</section>
-<section id="types-of-spatial-data" class="level3">
-<h3 class="anchored" data-anchor-id="types-of-spatial-data">Types of spatial data</h3>
-<p>Vector</p>
-<p>Raster</p>
-</section>
 <section id="how-this-guide-is-organized" class="level3">
 <h3 class="anchored" data-anchor-id="how-this-guide-is-organized">How this guide is organized</h3>
 <p>Demonstrate workflow in ArcGIS</p>
@@ -137,15 +151,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li></li>
 </ol>
 </section>
-<section id="using-arcgis-pro-v.-3.3.0" class="level2">
-<h2 class="anchored" data-anchor-id="using-arcgis-pro-v.-3.3.0">Using ArcGIS Pro (v. 3.3.0)</h2>
+<section id="using-arcgis-pro-v.-3.3.0" class="level1">
+<h1>Using ArcGIS Pro (v. 3.3.0)</h1>
 <p>The new</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Screenshot%202025-03-17%20121349.png" class="img-fluid figure-img"></p>
-<figcaption>Opening a new “project” in ArcGIS Pro</figcaption>
-</figure>
-</div>
+<p><img src="images/Screenshot%202025-03-17%20121349-01.png" class="img-fluid"></p>
+<p>It’s always a good idea to save often. ArcMap used to crash at the slightest offense, not quite sure if ArcGIS Pro will do the same.</p>
+<section id="part-i-vector-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-i-vector-data">Part I: Vector Data</h2>
 <section id="importing-data" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data">1. Importing data</h3>
 <p>Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).</p>
@@ -155,15 +167,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>The ‘Add Data’ Button (circled in orange) can be found in the Map menu</figcaption>
 </figure>
 </div>
-<p>Creating buffer</p>
 </section>
-<section id="creating-a-nice-looking-map" class="level3">
-<h3 class="anchored" data-anchor-id="creating-a-nice-looking-map">Creating a nice-looking map</h3>
+<section id="check-spatial-reference" class="level3">
+<h3 class="anchored" data-anchor-id="check-spatial-reference">2. Check Spatial Reference</h3>
+<p>Right click on each layer in the table of contents. Go to the bottom of the menu and click on Properties. In the properties menu, click on <strong>Source</strong> on the left, and then expand the <strong>Spatial Reference</strong> menu. Do this for all three layers.</p>
+<p><img src="images/Screenshot%202025-03-17%20143818.png" class="img-fluid"></p>
+<p>It appears that one of the layers does not have the same projection as the other two. While they look fine (ArcGIS shown them as if they all have the same spatial reference), we might run into problems if we start doing analyses on layers that have different coordinate systems. We will reproject the [ECL] layer to match the other two.</p>
+<p>Under the Analysis tab along the top ribbon, click on Tools (the red toolbox icon). It should open the Geoprocessing pane on the right side of your map. Click on the Toolboxes tab, then go to Data Management Tools &gt; Projections and Transformations &gt; Project.</p>
+<p><img src="images/Screenshot%202025-03-17%20144303.png" class="img-fluid"></p>
+<p>Alternatively, you can use the search bar and type in ‘project’. It should show you the name of the project tool, as well as the location. Make sure to select the one named “Project’ and not ‘Project Raster’ (but note that they are both within Data Management Tools.</p>
+<p><img src="images/Screenshot%202025-03-17%20144538.png" class="img-fluid"></p>
+<p>When you click on the project tool, you can use the dropdown menu to select the layer you want to reproject, or click on the folder icon to read in a layer to reproject. By default, ArcGIS Pro will save your projected layer in the project geodatabase, but you can again click on the folder icon to specify where you would like to save.</p>
+<p>Then, you will need to provide the coordinate system you want the new layer to have. If you click on the arrow in the box, it will let you select from layers already in the map. You can also click on the globe icon and it will provide more options. Since we want to match [ELC] to the other layers, select the one that matches what you found in the spatial reference for [TRAILS] or [CAMP].</p>
+<p><img src="images/Screenshot%202025-03-17%20161001.png" class="img-fluid"></p>
+</section>
+<section id="symbology" class="level3">
+<h3 class="anchored" data-anchor-id="symbology">3. Symbology</h3>
+<p>Now we want to change the way the layers are displayed. There is probably only a single color for all of the different polygon sections. Click on that box (under the layer in the table of contents).</p>
+<p><img src="images/Screenshot%202025-03-17%20143428.png" class="img-fluid"></p>
+</section>
+<section id="attributes" class="level3">
+<h3 class="anchored" data-anchor-id="attributes">4. Attributes</h3>
+<p><img src="images/Screenshot%202025-03-18%20131151-01.png" class="img-fluid"></p>
+</section>
+<section id="spatial-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-analysis">5. Spatial Analysis</h3>
+<p>We will do a quick analysis to calculate how much area will be</p>
+<p><img src="images/Screenshot%202025-03-18%20122627-01.png" class="img-fluid"></p>
+<p>Now, we want to put a buffer around the campsites, but we will need to adjust the buffer size based on campsite size. Larger campsites with greater capacity will take up more space and be more disruptive than smaller campsites with lower capacities. Therefore, we need to add a column to the attribute table that specifies the buffer size we want for our buffer. Open the attribute table for [camp] again. In the top left corner, there will be a button next to <strong>Field:</strong>. Click that.</p>
+<p><img src="images/Screenshot%202025-03-18%20131813.png" class="img-fluid"></p>
+<p>asdf</p>
+<p>We can add an empty</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20132147.png" class="img-fluid figure-img"></p>
+<figcaption>Note that the save button is all the way at the top</figcaption>
+</figure>
+</div>
+<p>After we click save, we still have an empty column. We will</p>
+<p>We are going to use a threshold of 10 campers to determine whether each size gets a 100 m or 200 m buffer. That is, anything less than or equal to 10 will have a buffer size of 100, and anything larger will have a buffer size of 200. Right click on the BUFFER column and select <strong>Calculate Field</strong>.</p>
+<p><img src="images/Screenshot%202025-03-18%20132318.png" class="img-fluid"></p>
+<p>After entering 100, hit OK. Then, in the same menu bar where you added the field, click Switch.</p>
+<p><img src="images/Screenshot%202025-03-18%20132355.png" class="img-fluid"></p>
+<p>This will remove the selection from camps with capacity &lt;=10, and highlight camps with capacity &gt; 10. Now we can open Calculate Field again, and this time enter BUFFER = 200. Click OK. Should look like this:</p>
+<p><img src="images/Screenshot%202025-03-18%20132405.png" class="img-fluid"></p>
+<p>Now you can close the attribute table and go to the Geoprocessing toolbox. Open Pairwise Buffer again.</p>
+<p><img src="images/Screenshot%202025-03-18%20132618-01.png" class="img-fluid"></p>
+<p>Make sure Case Field is blank! It seems to autofill.</p>
+<p>Note that we have to recalculate the area after clipping…otherwise it retains the area of the full polygon.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-19%20120701.png" class="img-fluid figure-img"></p>
+<figcaption>Wolverine area disturbed (in sq km)</figcaption>
+</figure>
+</div>
+</section>
+<section id="creating-final-map" class="level3">
+<h3 class="anchored" data-anchor-id="creating-final-map">Creating Final Map</h3>
 </section>
 </section>
-<section id="using-r-v.-4.4.2" class="level2">
-<h2 class="anchored" data-anchor-id="using-r-v.-4.4.2">Using R (v. 4.4.2)</h2>
-<p>klj;asdkfj</p>
+<section id="part-ii-raster-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-raster-data">Part II: Raster Data</h2>
+<section id="importing-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data-1">1. Importing Data</h3>
+<p>Let’s create a new map in ArcGIS Pro. The projects allow you to have multiple map documents with their own collection of layers that you can select between without closing the project. Along the top, go to Insert and Select New Map (you can click on the map icon, or if you click the words with the arrow, you can select a new map vs other options).</p>
+<p><img src="images/Screenshot%202025-03-18%20101446.png" class="img-fluid"></p>
+<p>You will now have two map tabs, probably named “Map” and “Map1”. You can rename them by opening the Properties menu for the map in the Contents Pane.</p>
+<p><img src="images/Screenshot%202025-03-18%20101823.png" class="img-fluid"></p>
+<p>For this section, we want to read in three layers again:</p>
+<ul>
+<li>elc.shp</li>
+<li>dem.tif</li>
+<li>rivers.shp</li>
+</ul>
+<p>Make sure to check spatial references and reproject the [ELC] layer again!</p>
+</section>
+<section id="symbology-1" class="level3">
+<h3 class="anchored" data-anchor-id="symbology-1">2. Symbology</h3>
+<p>Uncheck ELC temporarily. Let’s look at the default symbology for the rivers shapefile and DEM raster.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20102356.png" class="img-fluid figure-img"></p>
+<figcaption>Yikes</figcaption>
+</figure>
+</div>
+<p>Let’s change that elevation to a terrain palette. Go to the Symbology tab and click on box for Color scheme. Scroll down a bit until you find the elevation palettes (if you hover your cursor over the palette, it the name will appear). Click on the new palette.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20104523.png" class="img-fluid figure-img"></p>
+<figcaption>Better</figcaption>
+</figure>
+</div>
+<p>Buffers</p>
+<p>Create a 50 m buffer around trails</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20122627.png" class="img-fluid figure-img"></p>
+<figcaption>Note that ‘Pairwise Buffer’ is the new version for ArcGIS Pro</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20131151.png" class="img-fluid figure-img"></p>
+<figcaption>Opening the attribute table</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20131316.png" class="img-fluid figure-img"></p>
+<figcaption>Select by attributes</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="using-r-v.-4.4.2" class="level1">
+<h1>Using R (v. 4.4.2)</h1>
+<section id="using-r-as-gis" class="level2">
+<h2 class="anchored" data-anchor-id="using-r-as-gis">Using R as GIS</h2>
+<p>I want to preface this by pointing out that R is not a GIS. It can handle spatial data, but there are some things that are just not as efficient as using an actual GIS, like ArcGIS Pro or QGIS.</p>
+<section id="packages-for-handing-spatial-data-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="packages-for-handing-spatial-data-in-r">Packages for handing spatial data in R</h3>
+<p>There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.</p>
+<ul>
+<li><code>terra</code> : Supersedes the <code>raster</code> package and is much faster. Also allows manipulation of vector data.</li>
+<li><code>sf</code> : Package for working with ‘simple features’.</li>
+<li><code>stars</code> : another option for handing raster data</li>
+<li>These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.</li>
+</ul>
+<p>This demo will use the <code>terra</code> package. We will also use the <code>tidyterra</code> and <code>ggspatial</code> packages to leverage <code>ggplot2</code>’s elegant plotting. We will also make use of the <code>exactextractr</code> package to extend some of the <code>terra</code>’s main functions.</p>
+</section>
+</section>
+<section id="part-i-vector-data-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-i-vector-data-1">Part I: Vector Data</h2>
+<section id="importing-data-2" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data-2">1. Importing data</h3>
 <p>Note that we create a lot of files when we went through this in ArcGIS, but we don’t have to do this in R (but you could if you wanted to…I just skipped a lot of these).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
@@ -199,6 +337,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rast_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>layers <span class="ot">&lt;-</span> <span class="fu">rast</span>(rast_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+</section>
+<section id="part-ii-raster-data-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-raster-data-1">Part II: Raster Data</h2>
+<section id="importing-data-3" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data-3">1. Importing Data</h3>
+</section>
+</section>
 </section>
 
 </main>

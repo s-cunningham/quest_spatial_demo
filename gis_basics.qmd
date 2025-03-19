@@ -1,30 +1,10 @@
 ---
 title: "GIS Basics in ArcGIS Pro and R"
-author: "Stephanie Cunningham"
-format: html
+format: 
+  html:
+    toc: true
 editor: visual
 ---
-
-### Using R as GIS
-
-I want to preface this by pointing out that R is not a GIS. It can handle spatial data, but there are some things that are just not as efficient as using an actual GIS, like ArcGIS Pro or QGIS.
-
-### Packages for handing spatial data in R
-
-There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.
-
--   `terra` : Supersedes the `raster` package and is much faster. Also allows manipulation of vector data.
--   `sf` : Package for working with 'simple features'.
--   `stars` : another option for handing raster data
--   These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.
-
-This demo will use the `terra` package. We will also use the `tidyterra` and `ggspatial` packages to leverage `ggplot2`'s elegant plotting. We will also make use of the `exactextractr` package to extend some of the `terra`'s main functions.
-
-### Types of spatial data
-
-Vector
-
-Raster
 
 ### How this guide is organized
 
@@ -40,11 +20,15 @@ Demonstrate the same workflow in R
 2.  Check spatial reference and reproject
 3.  
 
-## Using ArcGIS Pro (v. 3.3.0)
+# Using ArcGIS Pro (v. 3.3.0)
 
 The new
 
 ![](images/Screenshot 2025-03-17 121349-01.png)
+
+It's always a good idea to save often. ArcMap used to crash at the slightest offense, not quite sure if ArcGIS Pro will do the same.
+
+## Part I: Vector Data
 
 ### 1. Importing data
 
@@ -52,7 +36,7 @@ Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro
 
 ![The 'Add Data' Button (circled in orange) can be found in the Map menu](images/Screenshot%202025-03-10%20140217.png)
 
-### Check Spatial Reference
+### 2. Check Spatial Reference
 
 Right click on each layer in the table of contents. Go to the bottom of the menu and click on Properties. In the properties menu, click on **Source** on the left, and then expand the **Spatial Reference** menu. Do this for all three layers.
 
@@ -68,17 +52,124 @@ Alternatively, you can use the search bar and type in 'project'. It should show 
 
 ![](images/Screenshot 2025-03-17 144538.png)
 
-### Symbology
+When you click on the project tool, you can use the dropdown menu to select the layer you want to reproject, or click on the folder icon to read in a layer to reproject. By default, ArcGIS Pro will save your projected layer in the project geodatabase, but you can again click on the folder icon to specify where you would like to save.
+
+Then, you will need to provide the coordinate system you want the new layer to have. If you click on the arrow in the box, it will let you select from layers already in the map. You can also click on the globe icon and it will provide more options. Since we want to match \[ELC\] to the other layers, select the one that matches what you found in the spatial reference for \[TRAILS\] or \[CAMP\].
+
+![](images/Screenshot 2025-03-17 161001.png)
+
+### 3. Symbology
+
+Now we want to change the way the layers are displayed. There is probably only a single color for all of the different polygon sections. Click on that box (under the layer in the table of contents).
 
 ![](images/Screenshot 2025-03-17 143428.png)
 
-Creating buffer
+### 4. Attributes
 
-### Creating a nice-looking map
+![](images/Screenshot 2025-03-18 131151-01.png)
 
-## Using R (v. 4.4.2)
+### 5. Spatial Analysis
 
-klj;asdkfj
+We will do a quick analysis to calculate how much area will be
+
+![](images/Screenshot 2025-03-18 122627-01.png)
+
+Now, we want to put a buffer around the campsites, but we will need to adjust the buffer size based on campsite size. Larger campsites with greater capacity will take up more space and be more disruptive than smaller campsites with lower capacities. Therefore, we need to add a column to the attribute table that specifies the buffer size we want for our buffer. Open the attribute table for \[camp\] again. In the top left corner, there will be a button next to **Field:**. Click that.
+
+![](images/Screenshot 2025-03-18 131813.png)
+
+asdf
+
+We can add an empty
+
+![Note that the save button is all the way at the top](images/Screenshot 2025-03-18 132147.png)
+
+After we click save, we still have an empty column. We will
+
+We are going to use a threshold of 10 campers to determine whether each size gets a 100 m or 200 m buffer. That is, anything less than or equal to 10 will have a buffer size of 100, and anything larger will have a buffer size of 200. Right click on the BUFFER column and select **Calculate Field**.
+
+![](images/Screenshot 2025-03-18 132318.png)
+
+After entering 100, hit OK. Then, in the same menu bar where you added the field, click Switch.
+
+![](images/Screenshot 2025-03-18 132355.png)
+
+This will remove the selection from camps with capacity \<=10, and highlight camps with capacity \> 10. Now we can open Calculate Field again, and this time enter BUFFER = 200. Click OK. Should look like this:
+
+![](images/Screenshot 2025-03-18 132405.png)
+
+Now you can close the attribute table and go to the Geoprocessing toolbox. Open Pairwise Buffer again.
+
+![](images/Screenshot 2025-03-18 132618-01.png)
+
+Make sure Case Field is blank! It seems to autofill.
+
+Note that we have to recalculate the area after clipping...otherwise it retains the area of the full polygon.
+
+![Wolverine area disturbed (in sq km)](images/Screenshot 2025-03-19 120701.png)
+
+### Creating Final Map
+
+## Part II: Raster Data
+
+### 1. Importing Data
+
+Let's create a new map in ArcGIS Pro. The projects allow you to have multiple map documents with their own collection of layers that you can select between without closing the project. Along the top, go to Insert and Select New Map (you can click on the map icon, or if you click the words with the arrow, you can select a new map vs other options).
+
+![](images/Screenshot 2025-03-18 101446.png)
+
+You will now have two map tabs, probably named "Map" and "Map1". You can rename them by opening the Properties menu for the map in the Contents Pane.
+
+![](images/Screenshot 2025-03-18 101823.png)
+
+For this section, we want to read in three layers again:
+
+-   elc.shp
+-   dem.tif
+-   rivers.shp
+
+Make sure to check spatial references and reproject the \[ELC\] layer again!
+
+### 2. Symbology
+
+Uncheck ELC temporarily. Let's look at the default symbology for the rivers shapefile and DEM raster.
+
+![Yikes](images/Screenshot 2025-03-18 102356.png)
+
+Let's change that elevation to a terrain palette. Go to the Symbology tab and click on box for Color scheme. Scroll down a bit until you find the elevation palettes (if you hover your cursor over the palette, it the name will appear). Click on the new palette.
+
+![Better](images/Screenshot 2025-03-18 104523.png)
+
+Buffers
+
+Create a 50 m buffer around trails
+
+![Note that 'Pairwise Buffer' is the new version for ArcGIS Pro](images/Screenshot 2025-03-18 122627.png)
+
+![Opening the attribute table](images/Screenshot 2025-03-18 131151.png)
+
+![Select by attributes](images/Screenshot 2025-03-18 131316.png)
+
+# Using R (v. 4.4.2)
+
+## Using R as GIS
+
+I want to preface this by pointing out that R is not a GIS. It can handle spatial data, but there are some things that are just not as efficient as using an actual GIS, like ArcGIS Pro or QGIS.
+
+### Packages for handing spatial data in R
+
+There are many packages that will allow you to handle and manipulate spatial data in R. Several of these are only a few years old, and have superseded previous packages.
+
+-   `terra` : Supersedes the `raster` package and is much faster. Also allows manipulation of vector data.
+-   `sf` : Package for working with 'simple features'.
+-   `stars` : another option for handing raster data
+-   These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.
+
+This demo will use the `terra` package. We will also use the `tidyterra` and `ggspatial` packages to leverage `ggplot2`'s elegant plotting. We will also make use of the `exactextractr` package to extend some of the `terra`'s main functions.
+
+## Part I: Vector Data
+
+### 1. Importing data
 
 Note that we create a lot of files when we went through this in ArcGIS, but we don't have to do this in R (but you could if you wanted to...I just skipped a lot of these).
 
@@ -133,3 +224,7 @@ We can also combine multiple rasters into a "stack" , which is what it was known
 rast_list <- c()
 layers <- rast(rast_list)
 ```
+
+## Part II: Raster Data
+
+### 1. Importing Data
