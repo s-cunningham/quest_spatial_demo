@@ -150,6 +150,12 @@ Create a 50 m buffer around trails
 
 ![Select by attributes](images/Screenshot 2025-03-18 131316.png)
 
+Hillshading
+
+Analysis Tab \> Raster Functions \> Surface \> Hillshade
+
+![](images/Screenshot 2025-03-20 110756.png)
+
 # Using R (v. 4.4.2)
 
 ## Using R as GIS
@@ -228,3 +234,49 @@ layers <- rast(rast_list)
 ## Part II: Raster Data
 
 ### 1. Importing Data
+
+Hillshading
+
+```{r}
+#| eval: false
+### Create hillshade from DEM raster
+
+## Use terrain function to create new rasters with slope and aspect (in radians!)
+# Slope
+dem_s <- terrain(dem, v="slope", neighbors=8, unit="radians") 
+
+# Quick plot to visualize
+plot(dem_s)
+```
+
+asdf
+
+```{r}
+#| eval: false
+# Aspect
+dem_a <- terrain(dem, v="aspect", neighbors=8, unit="radians") 
+
+# Quick plot to visualize
+plot(dem_a)
+```
+
+Now create the hillshade.
+
+```{r}
+#| eval: false
+## Use slope and aspect to create hillshade
+hill <- shade(slope=dem_s, aspect=dem_a, angle=40, direction=270)
+plot(hill)
+
+## Plot
+# but first, make a palette
+pal_greys <- hcl.colors(1000, "Grays")
+
+ggplot() +
+  geom_spatraster(data=hill) +
+  scale_fill_gradientn(colors = pal_greys, na.value = NA)
+```
+
+The 3rd and 4th arguments we included, `angle` and `direction` are the elevation angle of the light source (i.e., the sun), in degrees, and the direction of the light source, also in degrees. Try changing these values to see how the hillshade changes. These are slightly different than the parameters in ArcGIS Pro (azimuth & height)
+
+You can save the hillshade directly by adding the `filename` argument.

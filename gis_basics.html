@@ -278,6 +278,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Select by attributes</figcaption>
 </figure>
 </div>
+<p>Hillshading</p>
+<p>Analysis Tab &gt; Raster Functions &gt; Surface &gt; Hillshade</p>
+<p><img src="images/Screenshot%202025-03-20%20110756.png" class="img-fluid"></p>
 </section>
 </section>
 </section>
@@ -343,6 +346,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="part-ii-raster-data-1">Part II: Raster Data</h2>
 <section id="importing-data-3" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data-3">1. Importing Data</h3>
+<p>Hillshading</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Create hillshade from DEM raster</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Use terrain function to create new rasters with slope and aspect (in radians!)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dem_s <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dem, <span class="at">v=</span><span class="st">"slope"</span>, <span class="at">neighbors=</span><span class="dv">8</span>, <span class="at">unit=</span><span class="st">"radians"</span>) </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick plot to visualize</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dem_s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>asdf</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aspect</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dem_a <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dem, <span class="at">v=</span><span class="st">"aspect"</span>, <span class="at">neighbors=</span><span class="dv">8</span>, <span class="at">unit=</span><span class="st">"radians"</span>) </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick plot to visualize</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dem_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now create the hillshade.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Use slope and aspect to create hillshade</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hill <span class="ot">&lt;-</span> <span class="fu">shade</span>(<span class="at">slope=</span>dem_s, <span class="at">aspect=</span>dem_a, <span class="at">angle=</span><span class="dv">40</span>, <span class="at">direction=</span><span class="dv">270</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hill)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># but first, make a palette</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>pal_greys <span class="ot">&lt;-</span> <span class="fu">hcl.colors</span>(<span class="dv">1000</span>, <span class="st">"Grays"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>hill) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> pal_greys, <span class="at">na.value =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The 3rd and 4th arguments we included, <code>angle</code> and <code>direction</code> are the elevation angle of the light source (i.e., the sun), in degrees, and the direction of the light source, also in degrees. Try changing these values to see how the hillshade changes. Note that you can save the hillshade directly by adding the <code>filename</code> argument.</p>
 </section>
 </section>
 </section>

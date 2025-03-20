@@ -142,8 +142,6 @@ ggplot() +
   theme_void() +
   theme(legend.position="none")
 
-test <- gridDist(trails)
-
 ### Now let's see how this disturbance impacts wolverine habitat
 # IF we look at just the wolverine column, it has categorical 
 elc$WOLVERINE
@@ -185,7 +183,7 @@ crs(elc)==crs(dem)
 elc <- project(elc, crs(rivers))
 crs(elc)==crs(rivers)
 
-## Let's plot dem## Let's plot them
+## Let's plot dem#
 # take a look at the raster by itself
 ggplot() +
   geom_spatraster(data=dem) +
@@ -242,10 +240,86 @@ plot(domveg)
 # Print out a list of the vegetation types
 unique(domveg)
 
-# Build 'from-to' matrix
-rcl <- as.matrix(data.frame(from=unique(domveg)$DOMVEG, 
-                            to=c("Meadow","Shrub","Forest","Forest","Meadow",
-                                 "Nonvegetated","Forest", "Forest","Forest", "Shrub")))
+hist(domveg)
 
-domveg <- classify(domveg, rcl)
+# Build 'from-to' matrix - this doesn't work
+# rcl <- as.matrix(data.frame(from=unique(domveg)$DOMVEG, 
+#                             to=c("Meadow","Shrub","Forest","Forest","Meadow",
+#                                  "Nonvegetated","Forest", "Forest","Forest", "Shrub")))
+# 
+# domveg <- classify(domveg, rcl)
+
+###
+
+## River kernel density
+library(spatstat)
+riv_sf <- sf::st_as_sf(rivers)
+density(riv_sf)
+
+## Distance to trails / rivers?
+test <- gridDist(trails)
+
+# focal stats 
+terra::focal(r_spat, w = 3, fun = "sum")
+
+
+spatstat.geom::as.psp(riv_sf)
+spatstat.geom::pixellate(rivers)
+
+
+
+
+### Create hillshade from DEM raster
+
+## Use terrain function to create new rasters with slope and aspect (in radians!)
+# Slope
+dem_s <- terrain(dem, v="slope", neighbors=8, unit="radians") 
+
+# Quick plot to visualize
+plot(dem_s)
+
+# Aspect
+dem_a <- terrain(dem, v="aspect", neighbors=8, unit="radians") 
+
+# Quick plot to visualize
+plot(dem_a)
+
+## Use slope and aspect to create hillshade
+hill <- shade(slope=dem_s, aspect=dem_a, angle=40, direction=270)
+plot(hill)
+
+## Plot
+# but first, make a palette
+pal_greys <- hcl.colors(1000, "Grays")
+
+ggplot() +
+  geom_spatraster(data=hill) +
+  scale_fill_gradientn(colors = pal_greys, na.value = NA)
+
+## plot hillshade with VEGCOVER semi-transparent 
+ggplot() +
+  # geom_spatraster(data=hill) +
+  # scale_fill_gradientn(colors=pal_greys, na.value = NA) +
+  geom_spatraster(data=moose, alpha=0.5, use_coltab=TRUE, na.rm=TRUE)
+
+#### Distance to rivers ####
+temp_rast <- rast(rivers, resolution=30) # create template raster 30 x 30 m
+temp_rast
+
+# add this argument to visualize cells
+# , vals=rnorm(749700)
+crs(rivers)==crs(temp_rast)
+
+# Calculate the distance raster from the polyline
+# The function will calculate distance between each cell and closest part of line
+distance_raster <- distance(temp_rast, rivers)
+
+
+
+
+
+
+
+
+
 
