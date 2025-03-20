@@ -259,6 +259,15 @@ density(riv_sf)
 ## Distance to trails / rivers?
 test <- gridDist(trails)
 
+
+rasterize(crime, r, fun=length, background=0)
+
+
+
+
+
+
+
 # focal stats 
 terra::focal(r_spat, w = 3, fun = "sum")
 
