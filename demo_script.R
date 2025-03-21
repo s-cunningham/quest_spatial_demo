@@ -1,6 +1,8 @@
 library(ggplot2)
 library(terra)
 library(tidyterra)
+library(ggspatial)
+library(ggnewscale)
 
 theme_set(theme_bw())
 
@@ -151,19 +153,19 @@ ggplot() +
   geom_spatvector(data=elc, aes(fill=WOLVERINE))
 
 # Filter using square bracket indexing (these are the most suitable categories)
-wolv <- elc[elc$WOLVERINE==4 | elc$WOLVERINE==5,]
+gulo <- elc[elc$WOLVERINE==4 | elc$WOLVERINE==5,]
 ggplot() +
-  geom_spatvector(data=wolv, aes(fill=factor(WOLVERINE)))
+  geom_spatvector(data=gulo, aes(fill=factor(WOLVERINE)))
 
 # How much area is there?
-sum(expanse(wolv)) / 1000 / 1000 # convert to km2
+sum(expanse(gulo)) / 1000 / 1000 # convert to km2
 
 ## Let's clip it by the disturbance area
-wolv_dist <- crop(wolv, buffunion)
-plot(wolv_dist)
+gulo_dist <- crop(gulo, buffunion)
+plot(gulo_dist)
 
 # how much area is being disturbed?
-sum(expanse(wolv_dist)) / 1000 / 1000 # convert to km2
+sum(expanse(gulo_dist)) / 1000 / 1000 # convert to km2
 
 # about 5%
 
@@ -183,7 +185,7 @@ crs(elc)==crs(dem)
 elc <- project(elc, crs(rivers))
 crs(elc)==crs(rivers)
 
-## Let's plot dem#
+## Let's plot dem
 # take a look at the raster by itself
 ggplot() +
   geom_spatraster(data=dem) +
@@ -242,40 +244,33 @@ unique(domveg)
 
 hist(domveg)
 
-# Build 'from-to' matrix - this doesn't work
-# rcl <- as.matrix(data.frame(from=unique(domveg)$DOMVEG, 
-#                             to=c("Meadow","Shrub","Forest","Forest","Meadow",
-#                                  "Nonvegetated","Forest", "Forest","Forest", "Shrub")))
-# 
-# domveg <- classify(domveg, rcl)
 
-###
+# Set up raster values and classes
+veg_class <- c("Meadow","Shrub","Forest","Forest","Meadow",
+               "Nonvegetated","Forest", "Forest","Forest", "Shrub")
 
-## River kernel density
-library(spatstat)
-riv_sf <- sf::st_as_sf(rivers)
-density(riv_sf)
+# Check the levels
+levels(domveg)
 
-## Distance to trails / rivers?
-test <- gridDist(trails)
+# Add class names and numbers to the raster
+levels(domveg) <- list(data.frame(ID = 0:9,
+                                  domveg = veg_class))
 
+dv <- as.numeric(domveg)
 
-rasterize(crime, r, fun=length, background=0)
+test <- focal(dv, w=31, fun=function(x) length(x))
 
+#### Distance to rivers ####
+temp_rast <- rast(rivers, resolution=30) # create template raster 30 x 30 m
+temp_rast
 
+# add this argument to visualize cells
+# , vals=rnorm(749700)
+crs(rivers)==crs(temp_rast)
 
-
-
-
-
-# focal stats 
-terra::focal(r_spat, w = 3, fun = "sum")
-
-
-spatstat.geom::as.psp(riv_sf)
-spatstat.geom::pixellate(rivers)
-
-
+# Calculate the distance raster from the polyline
+# The function will calculate distance between each cell and closest part of line
+distance_raster <- distance(temp_rast, rivers)
 
 
 ### Create hillshade from DEM raster
@@ -294,7 +289,7 @@ dem_a <- terrain(dem, v="aspect", neighbors=8, unit="radians")
 plot(dem_a)
 
 ## Use slope and aspect to create hillshade
-hill <- shade(slope=dem_s, aspect=dem_a, angle=40, direction=270)
+hill <- shade(slope=dem_s, aspect=dem_a, angle=60, direction=270)
 plot(hill)
 
 ## Plot
@@ -307,21 +302,26 @@ ggplot() +
 
 ## plot hillshade with VEGCOVER semi-transparent 
 ggplot() +
-  # geom_spatraster(data=hill) +
-  # scale_fill_gradientn(colors=pal_greys, na.value = NA) +
-  geom_spatraster(data=moose, alpha=0.5, use_coltab=TRUE, na.rm=TRUE)
+  geom_spatraster(data=hill, show.legend=FALSE) +
+  scale_fill_gradientn(colors=pal_greys, na.value=NA) +
+  new_scale_fill() + # ggnewscale package
+  geom_spatraster(data=moose, alpha=0.5, na.rm=TRUE) + #use_coltab=TRUE, 
+  scale_fill_coltab(data=moose, name="Suitability") +
+  theme(legend.position=c(0.92,0.8),
+        legend.justification=c(1,1)) +
+  annotation_north_arrow(
+    which_north = TRUE,
+    pad_x = unit(0.05, "npc"),
+    pad_y = unit(0.7, "npc"),
+    style = north_arrow_minimal()) +
+  annotation_scale(
+    height = unit(0.02, "npc"),
+    width_hint = 0.4,
+    pad_x = unit(0.1, "npc"),
+    pad_y = unit(0.85, "npc"), #0.07
+    text_cex = 1)
 
-#### Distance to rivers ####
-temp_rast <- rast(rivers, resolution=30) # create template raster 30 x 30 m
-temp_rast
 
-# add this argument to visualize cells
-# , vals=rnorm(749700)
-crs(rivers)==crs(temp_rast)
-
-# Calculate the distance raster from the polyline
-# The function will calculate distance between each cell and closest part of line
-distance_raster <- distance(temp_rast, rivers)
 
 
 

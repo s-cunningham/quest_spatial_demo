@@ -80,7 +80,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#how-this-guide-is-organized" id="toc-how-this-guide-is-organized" class="nav-link active" data-scroll-target="#how-this-guide-is-organized">How this guide is organized</a></li>
-  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#using-arcgis-pro-v.-3.3.0" id="toc-using-arcgis-pro-v.-3.3.0" class="nav-link" data-scroll-target="#using-arcgis-pro-v.-3.3.0">Using ArcGIS Pro (v. 3.3.0)</a>
   <ul class="collapse">
   <li><a href="#part-i-vector-data" id="toc-part-i-vector-data" class="nav-link" data-scroll-target="#part-i-vector-data">Part I: Vector Data</a>
@@ -90,12 +89,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#symbology" id="toc-symbology" class="nav-link" data-scroll-target="#symbology">3. Symbology</a></li>
   <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">4. Attributes</a></li>
   <li><a href="#spatial-analysis" id="toc-spatial-analysis" class="nav-link" data-scroll-target="#spatial-analysis">5. Spatial Analysis</a></li>
-  <li><a href="#creating-final-map" id="toc-creating-final-map" class="nav-link" data-scroll-target="#creating-final-map">Creating Final Map</a></li>
   </ul></li>
   <li><a href="#part-ii-raster-data" id="toc-part-ii-raster-data" class="nav-link" data-scroll-target="#part-ii-raster-data">Part II: Raster Data</a>
   <ul class="collapse">
   <li><a href="#importing-data-1" id="toc-importing-data-1" class="nav-link" data-scroll-target="#importing-data-1">1. Importing Data</a></li>
   <li><a href="#symbology-1" id="toc-symbology-1" class="nav-link" data-scroll-target="#symbology-1">2. Symbology</a></li>
+  <li><a href="#raster-based-analysis" id="toc-raster-based-analysis" class="nav-link" data-scroll-target="#raster-based-analysis">3. Raster-based Analysis</a></li>
+  <li><a href="#surface-analysis" id="toc-surface-analysis" class="nav-link" data-scroll-target="#surface-analysis">4. Surface Analysis</a></li>
+  <li><a href="#create-a-final-map" id="toc-create-a-final-map" class="nav-link" data-scroll-target="#create-a-final-map">5. Create a Final Map</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#using-r-v.-4.4.2" id="toc-using-r-v.-4.4.2" class="nav-link" data-scroll-target="#using-r-v.-4.4.2">Using R (v. 4.4.2)</a>
@@ -107,10 +108,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#part-i-vector-data-1" id="toc-part-i-vector-data-1" class="nav-link" data-scroll-target="#part-i-vector-data-1">Part I: Vector Data</a>
   <ul class="collapse">
   <li><a href="#importing-data-2" id="toc-importing-data-2" class="nav-link" data-scroll-target="#importing-data-2">1. Importing data</a></li>
+  <li><a href="#check-spatial-reference-1" id="toc-check-spatial-reference-1" class="nav-link" data-scroll-target="#check-spatial-reference-1">2. Check Spatial Reference</a></li>
+  <li><a href="#plotting-spatial-objects-with-ggplot2" id="toc-plotting-spatial-objects-with-ggplot2" class="nav-link" data-scroll-target="#plotting-spatial-objects-with-ggplot2">3. Plotting Spatial Objects with <code>ggplot2</code></a></li>
+  <li><a href="#attributes-1" id="toc-attributes-1" class="nav-link" data-scroll-target="#attributes-1">4. Attributes</a></li>
+  <li><a href="#spatial-analysis-1" id="toc-spatial-analysis-1" class="nav-link" data-scroll-target="#spatial-analysis-1">5. Spatial Analysis</a></li>
   </ul></li>
   <li><a href="#part-ii-raster-data-1" id="toc-part-ii-raster-data-1" class="nav-link" data-scroll-target="#part-ii-raster-data-1">Part II: Raster Data</a>
   <ul class="collapse">
   <li><a href="#importing-data-3" id="toc-importing-data-3" class="nav-link" data-scroll-target="#importing-data-3">1. Importing Data</a></li>
+  <li><a href="#plotting-spatial-objects-with-ggplot2-1" id="toc-plotting-spatial-objects-with-ggplot2-1" class="nav-link" data-scroll-target="#plotting-spatial-objects-with-ggplot2-1">2. Plotting Spatial Objects with <code>ggplot2</code></a></li>
+  <li><a href="#raster-based-analysis-1" id="toc-raster-based-analysis-1" class="nav-link" data-scroll-target="#raster-based-analysis-1">3. Raster-based Analysis</a></li>
+  <li><a href="#surface-analysis-1" id="toc-surface-analysis-1" class="nav-link" data-scroll-target="#surface-analysis-1">4. Surface Analysis</a></li>
+  <li><a href="#create-a-final-map-1" id="toc-create-a-final-map-1" class="nav-link" data-scroll-target="#create-a-final-map-1">5. Create a Final Map</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -139,28 +148,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="how-this-guide-is-organized" class="level3">
 <h3 class="anchored" data-anchor-id="how-this-guide-is-organized">How this guide is organized</h3>
-<p>Demonstrate workflow in ArcGIS</p>
-<p>Demonstrate the same workflow in R</p>
-<p><em>Note:</em> Material for this guide was liberally borrowed from Labs 2 and 3 of Jacqui Frair’s Landscape Ecology course (EFB650) at SUNY College of Environmental Science and Forestry, which was based on materials developed by Charlene Nielsen and Evelyn Merrill at the University of Alberta.</p>
-</section>
-<section id="objectives" class="level3">
-<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
 <ol type="1">
-<li>Import vector (points, lines, polygons) and raster data, visualize</li>
-<li>Check spatial reference and reproject</li>
-<li></li>
+<li>There are 2 sections: vector-based and raster-based.</li>
+<li>Demonstrate workflow in ArcGIS</li>
+<li>Demonstrate the same workflow in R</li>
 </ol>
+<p><em>Note:</em> Material for this guide was liberally borrowed from Labs 2 and 3 of Jacqui Frair’s Landscape Ecology course (EFB650) at SUNY College of Environmental Science and Forestry, which was based on materials developed by Charlene Nielsen and Evelyn Merrill at the University of Alberta.</p>
 </section>
 <section id="using-arcgis-pro-v.-3.3.0" class="level1">
 <h1>Using ArcGIS Pro (v. 3.3.0)</h1>
-<p>The new</p>
+<p>The new ArcGIS Pro is a little different in that it creates ‘projects’ instead of individual map document. Click on the Map icon to create a new map project.</p>
 <p><img src="images/Screenshot%202025-03-17%20121349-01.png" class="img-fluid"></p>
 <p>It’s always a good idea to save often. ArcMap used to crash at the slightest offense, not quite sure if ArcGIS Pro will do the same.</p>
 <section id="part-i-vector-data" class="level2">
 <h2 class="anchored" data-anchor-id="part-i-vector-data">Part I: Vector Data</h2>
 <section id="importing-data" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data">1. Importing data</h3>
-<p>Probably my favorite thing about the forced transition from ArcMap to ArcGIS Pro is that it is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from the same folder).</p>
+<p>It is no longer necessary to set folder connections before importing data (though it is still possible to do that, and might be preferred if you have a lot of different spatial layers that you will be importing from or exporting to the same folder).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot%202025-03-10%20140217.png" class="img-fluid figure-img"></p>
@@ -170,12 +174,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="check-spatial-reference" class="level3">
 <h3 class="anchored" data-anchor-id="check-spatial-reference">2. Check Spatial Reference</h3>
-<p>Right click on each layer in the table of contents. Go to the bottom of the menu and click on Properties. In the properties menu, click on <strong>Source</strong> on the left, and then expand the <strong>Spatial Reference</strong> menu. Do this for all three layers.</p>
+<p>Right click on each layer in the table of contents. Go to the bottom of the menu and click on Properties. In the properties menu, click on Source on the left, and then expand the <strong>Spatial Reference</strong> menu. Do this for all three layers.</p>
 <p><img src="images/Screenshot%202025-03-17%20143818.png" class="img-fluid"></p>
-<p>It appears that one of the layers does not have the same projection as the other two. While they look fine (ArcGIS shown them as if they all have the same spatial reference), we might run into problems if we start doing analyses on layers that have different coordinate systems. We will reproject the [ECL] layer to match the other two.</p>
+<p>It appears that one of the layers does not have the same projection as the other two. While they look fine (ArcGIS shown them as if they all have the same spatial reference), we might run into problems if we start doing analyses on layers that have different coordinate systems. We will reproject the [ELC] layer to match the other two.</p>
 <p>Under the Analysis tab along the top ribbon, click on Tools (the red toolbox icon). It should open the Geoprocessing pane on the right side of your map. Click on the Toolboxes tab, then go to Data Management Tools &gt; Projections and Transformations &gt; Project.</p>
 <p><img src="images/Screenshot%202025-03-17%20144303.png" class="img-fluid"></p>
-<p>Alternatively, you can use the search bar and type in ‘project’. It should show you the name of the project tool, as well as the location. Make sure to select the one named “Project’ and not ‘Project Raster’ (but note that they are both within Data Management Tools.</p>
+<p>Alternatively, you can use the search bar and type in ‘project’. It should show you the name of the project tool, as well as the location. Make sure to select the one named “Project’ and not ‘Project Raster’ (but note that they are both within Data Management Tools).</p>
 <p><img src="images/Screenshot%202025-03-17%20144538.png" class="img-fluid"></p>
 <p>When you click on the project tool, you can use the dropdown menu to select the layer you want to reproject, or click on the folder icon to read in a layer to reproject. By default, ArcGIS Pro will save your projected layer in the project geodatabase, but you can again click on the folder icon to specify where you would like to save.</p>
 <p>Then, you will need to provide the coordinate system you want the new layer to have. If you click on the arrow in the box, it will let you select from layers already in the map. You can also click on the globe icon and it will provide more options. Since we want to match [ELC] to the other layers, select the one that matches what you found in the spatial reference for [TRAILS] or [CAMP].</p>
@@ -183,18 +187,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="symbology" class="level3">
 <h3 class="anchored" data-anchor-id="symbology">3. Symbology</h3>
-<p>Now we want to change the way the layers are displayed. There is probably only a single color for all of the different polygon sections. Click on that box (under the layer in the table of contents).</p>
+<p>Now we want to change the way the layers are displayed. There is probably only a single color for all of the different polygon sections. Click on that box (under the layer in the table of contents). The Color scheme drop-down menu will allow you to select a color palette. Alternatively, you can change individual colors by clicking on the color in the Symbol column of the Symbology menu.</p>
 <p><img src="images/Screenshot%202025-03-17%20143428.png" class="img-fluid"></p>
 </section>
 <section id="attributes" class="level3">
 <h3 class="anchored" data-anchor-id="attributes">4. Attributes</h3>
+<p>In order to view the information stored within the polygons, we need to open the Attribute Table. Right click on the layer name and select Attribute Table, or hit CTRL+T.</p>
 <p><img src="images/Screenshot%202025-03-18%20131151-01.png" class="img-fluid"></p>
 </section>
 <section id="spatial-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="spatial-analysis">5. Spatial Analysis</h3>
 <p>We will do a quick analysis to calculate how much area will be</p>
-<p><img src="images/Screenshot%202025-03-18%20122627-01.png" class="img-fluid"></p>
-<p>Now, we want to put a buffer around the campsites, but we will need to adjust the buffer size based on campsite size. Larger campsites with greater capacity will take up more space and be more disruptive than smaller campsites with lower capacities. Therefore, we need to add a column to the attribute table that specifies the buffer size we want for our buffer. Open the attribute table for [camp] again. In the top left corner, there will be a button next to <strong>Field:</strong>. Click that.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20122627-01.png" class="img-fluid figure-img"></p>
+<figcaption>Note that ‘Pairwise Buffer’ is the newer version of ‘Buffer’</figcaption>
+</figure>
+</div>
+<p>Now, we want to put a buffer around the campsites, but we will need to adjust the buffer size based on campsite size. Larger campsites with greater capacity will take up more space and be more disruptive than smaller campsites with lower capacities. Therefore, we need to add a column to the attribute table that specifies the buffer size we want for our buffer. Open the attribute table for [CAMP] again. In the top left corner, there will be a button next to <strong>Field:</strong>. Click that.</p>
 <p><img src="images/Screenshot%202025-03-18%20131813.png" class="img-fluid"></p>
 <p>asdf</p>
 <p>We can add an empty</p>
@@ -221,9 +231,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Wolverine area disturbed (in sq km)</figcaption>
 </figure>
 </div>
-</section>
-<section id="creating-final-map" class="level3">
-<h3 class="anchored" data-anchor-id="creating-final-map">Creating Final Map</h3>
 </section>
 </section>
 <section id="part-ii-raster-data" class="level2">
@@ -258,14 +265,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Better</figcaption>
 </figure>
 </div>
-<p>Buffers</p>
-<p>Create a 50 m buffer around trails</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Screenshot%202025-03-18%20122627.png" class="img-fluid figure-img"></p>
-<figcaption>Note that ‘Pairwise Buffer’ is the new version for ArcGIS Pro</figcaption>
-</figure>
-</div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot%202025-03-18%20131151.png" class="img-fluid figure-img"></p>
@@ -278,9 +277,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Select by attributes</figcaption>
 </figure>
 </div>
-<p>Hillshading</p>
+</section>
+<section id="raster-based-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="raster-based-analysis">3. Raster-based Analysis</h3>
+</section>
+<section id="surface-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="surface-analysis">4. Surface Analysis</h3>
 <p>Analysis Tab &gt; Raster Functions &gt; Surface &gt; Hillshade</p>
 <p><img src="images/Screenshot%202025-03-20%20110756.png" class="img-fluid"></p>
+</section>
+<section id="create-a-final-map" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-final-map">5. Create a Final Map</h3>
 </section>
 </section>
 </section>
@@ -298,88 +305,370 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>stars</code> : another option for handing raster data</li>
 <li>These are the heavy-hitters in my opinion, but there are several other packages that do complementary things.</li>
 </ul>
-<p>This demo will use the <code>terra</code> package. We will also use the <code>tidyterra</code> and <code>ggspatial</code> packages to leverage <code>ggplot2</code>’s elegant plotting. We will also make use of the <code>exactextractr</code> package to extend some of the <code>terra</code>’s main functions.</p>
+<p>This demo will use the <code>terra</code> package (v. 1.7-83). We will also use the <code>tidyterra</code> (v. 0.6.1) and <code>ggspatial</code> (v. 1.1.9) packages to leverage <code>ggplot2</code>’s elegant plotting (v. 3.5.1), with a little bit of help from <code>ggnewscale</code> (v. 0.5.0).</p>
 </section>
 </section>
 <section id="part-i-vector-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-i-vector-data-1">Part I: Vector Data</h2>
+<p>The packages we need for this section are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyterra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <section id="importing-data-2" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data-2">1. Importing data</h3>
 <p>Note that we create a lot of files when we went through this in ArcGIS, but we don’t have to do this in R (but you could if you wanted to…I just skipped a lot of these).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Terra makes it easy to read in a shapefile with the vect() function</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>adk <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"data/.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Terra makes it easy to read in shapefiles with the vect() function</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecological Land Classification (i.e., ecoregions) </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>elc <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"efb650_data/elc.shp"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Trails in the Clearwater River Watershed </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>trails <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"efb650_data/trails.shp"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Camp sites in the Clearwater River Watershed </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>camp <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"efb650_data/camp.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now let’s read in a raster</p>
+</section>
+<section id="check-spatial-reference-1" class="level3">
+<h3 class="anchored" data-anchor-id="check-spatial-reference-1">2. Check Spatial Reference</h3>
+<p>We can use the <code>crs</code> function (which stands for ‘coordinate reference system’) to check the spatial reference of each shapefile.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in a raster using the rast() function</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/.tif"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot it quickly to get an idea of what we're working with</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r1)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the coordinate reference system (projection)</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the spatial reference</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>elc</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(elc)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>camp</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(camp)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>trails</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(trails)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Does the CRS match up between layers?</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(elc)<span class="sc">==</span><span class="fu">crs</span>(camp)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(elc)<span class="sc">==</span><span class="fu">crs</span>(trails) </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(camp)<span class="sc">==</span><span class="fu">crs</span>(trails) <span class="co"># Looks like elc is the problem. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Sometimes we need to reproject rasters, even though this can result in this getting a little wonky (warping squares and all that). The <code>terra</code> package feels better about reprojecting rasters when it has another raster it can match the first one to. That is, we’re probably going to need to do at least a bit of resampling, so <code>terra</code> would rather have a template when it does that.</p>
+<p>Sometimes we need to reproject rasters, even though this can result in this getting a little wonky (warping squares and all that). The <code>terra</code> package feels better about reprojecting rasters when it has another raster it can match the first one to.</p>
+<p>For vectors, we just need to provide a CRS. We can match it to a specific object like in ArcGIS.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a new raster (different projection)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/.tif"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r2)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject r1 to match the projection of r1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">project</span>(r1, r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject elc to camp CRS</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>elc <span class="ot">&lt;-</span> <span class="fu">project</span>(elc, <span class="fu">crs</span>(camp))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(elc)<span class="sc">==</span><span class="fu">crs</span>(camp)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## You can also provide an EPSG code if you are projecting to a specific CRS</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>elc_latlon <span class="ot">&lt;-</span> <span class="fu">project</span>(elc, <span class="st">"EPSG:4326"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can also combine multiple rasters into a “stack” , which is what it was known as in the <code>raster</code> package, if we want to do the same thing to multiple rasters. We can do the same thing in <code>terra</code> but don’t explicitly call it a “stack” like we did in <code>raster</code>.</p>
+</section>
+<section id="plotting-spatial-objects-with-ggplot2" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-spatial-objects-with-ggplot2">3. Plotting Spatial Objects with <code>ggplot2</code></h3>
+<p>We can create high-quality plots with the <code>ggplot2</code> package, and <code>tidyterra</code> helps handle the spatial objects correctly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead, we just use the c() function</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rast_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>layers <span class="ot">&lt;-</span> <span class="fu">rast</span>(rast_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a color palette so that we don't have to copy it into our code so many times</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#F7FCF0"</span>,<span class="st">"#E0F3DB"</span>,<span class="st">"#CCEBC5"</span>,<span class="st">"#A8DDB5"</span>,<span class="st">"#7BCCC4"</span>,<span class="st">"gray"</span>,<span class="st">"#4EB3D3"</span>,<span class="st">"#2B8CBE"</span>,<span class="st">"#0868AC"</span>,<span class="st">"#084081"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## First plot</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>elc) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>trails) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>camp) </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># doesn't look like much at this point</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## We can control the colors and size/width of points and lines</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>elc, <span class="fu">aes</span>(<span class="at">fill=</span>DOMVEG)) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>pal) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>trails, <span class="at">color=</span><span class="st">"darkred"</span>, <span class="at">linewidth=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>camp, <span class="at">shape=</span><span class="dv">21</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">fill=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="attributes-1" class="level3">
+<h3 class="anchored" data-anchor-id="attributes-1">4. Attributes</h3>
+<p>We can view the ‘attribute table’ in R, which can also be converted to a data frame. The <code>values()</code> function will allow us to view the table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check [CAMP]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(camp)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check [ELC]</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(elc)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check [TRAILS]</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(trails)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="spatial-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-analysis-1">5. Spatial Analysis</h3>
+<p>If we are planning on building this trail system and campsites, we might want to assess how the disturbance will impact wildlife. First, we want to add a 50 km buffer around the trails.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 50 m buffer around the trails</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tr_buff <span class="ot">&lt;-</span> <span class="fu">buffer</span>(trails, <span class="at">width=</span><span class="dv">50</span>, <span class="at">capstyle=</span><span class="st">"round"</span>, <span class="at">joinstyle=</span><span class="st">"round"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot to see what it did. We can use base R plotting for a quick look.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tr_buff)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># It looks like each trail section received its own buffer, but we just want one continuous buffer. </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>tr_buff <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(tr_buff, <span class="at">dissolve=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we want to put a buffer around the campsites, but we will need to adjust the buffer size based on campsite size. Larger campsites with greater capacity will take up more space and be more disruptive than smaller campsites with lower capacities, so we want a 200 m buffer around high-capacity campsites, and a 100 m buffer around smaller campsites. We need to add a column to the SpatVector that specifies the buffer size we want for our buffer. We can use an if/else statement to assign buffer size based on campground capacity. This can be done the same way we would add this column to a data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a column to the [CAMP] SpatVector</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>camp<span class="sc">$</span>buff_size <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(camp<span class="sc">$</span>CAPACITY <span class="sc">&lt;=</span> <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">200</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(camp) <span class="co"># Check it worked</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the buffer</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ca_buff <span class="ot">&lt;-</span> <span class="fu">buffer</span>(camp, <span class="at">width=</span>camp<span class="sc">$</span>buff_size)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ca_buff) <span class="co"># check it worked</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we just need to combine the trail and campsite buffers into one single polygon.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all of the buffers into a single layer</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>buffunion <span class="ot">&lt;-</span> <span class="fu">union</span>(tr_buff, ca_buff)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Again we need to aggregate and dissolve our buffers</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>buffunion <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(buffunion, <span class="at">dissolve=</span><span class="cn">TRUE</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot to check</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(buffunion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After we have the buffer, we want to calculate areas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How much area is potentially disturbed by the trails and campsites?</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>disturbed_m <span class="ot">&lt;-</span> <span class="fu">expanse</span>(buffunion)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Not that the previous value was returned in square meters. Square kilometers will likely be more useful.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>disturbed_km <span class="ot">&lt;-</span> disturbed_m <span class="sc">/</span> <span class="dv">1000</span> <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>disturbed_km <span class="co"># print area to console</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s look at the disturbances through the eyes of a particular species, the wolverine (<em>Gulo gulo</em>). If we go back to the [ELC] SpatVector, there is a column called <code>WOLVERINE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What values do we see in the wolverine column?</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>elc<span class="sc">$</span>WOLVERINE</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the [ELC] layer according to wolverine landscape suitability values</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>elc, <span class="fu">aes</span>(<span class="at">fill=</span>WOLVERINE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We just want to look at values 4 and 5, which correspond to the two most suitable landscape classes. We can use square brackets to filter, again just like a data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter by WOLVERINE column to greatest suitability values</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>gulo <span class="ot">&lt;-</span> elc[elc<span class="sc">$</span>WOLVERINE<span class="sc">==</span><span class="dv">4</span> <span class="sc">|</span> elc<span class="sc">$</span>WOLVERINE<span class="sc">==</span><span class="dv">5</span>,]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>gulo, <span class="fu">aes</span>(<span class="at">fill=</span><span class="fu">factor</span>(WOLVERINE)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we calculate area again to see how much of our study area is highly suitable for wolverines.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How much area is there?</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">expanse</span>(gulo)) <span class="sc">/</span> <span class="dv">1000</span> <span class="sc">/</span> <span class="dv">1000</span> <span class="co"># convert to km2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we want to see only the area that will be disturbed by the potential trails and campsites, we need to clip the wolverine suitability by the buffer. Then, calculate the area again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Let's clip it by the disturbance area</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>gulo_dist <span class="ot">&lt;-</span> <span class="fu">crop</span>(gulo, buffunion)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gulo_dist)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># how much area is being disturbed?</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">expanse</span>(gulo_dist)) <span class="sc">/</span> <span class="dv">1000</span> <span class="sc">/</span> <span class="dv">1000</span> <span class="co"># convert to km2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="part-ii-raster-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-ii-raster-data-1">Part II: Raster Data</h2>
+<p>In this section, we will use rasters to understand terrain and vegetation classes from the perspective of a moose (<em>Alces alces</em>). The packages we need for this section are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyterra)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggnewscale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <section id="importing-data-3" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data-3">1. Importing Data</h3>
-<p>Hillshading</p>
+<p>Again we have 3 layers to import: [DEM], [RIVERS], and [ELC]. Make sure to check and adjust the spatial reference of any layers if needed. Like the <code>vect()</code> function we used to read vector data in the last section, we can use <code>rast()</code> to read in raster data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Create hillshade from DEM raster</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Use terrain function to create new rasters with slope and aspect (in radians!)</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dem_s <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dem, <span class="at">v=</span><span class="st">"slope"</span>, <span class="at">neighbors=</span><span class="dv">8</span>, <span class="at">unit=</span><span class="st">"radians"</span>) </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick plot to visualize</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dem_s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Read data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ecological Land Classification (i.e., ecoregions) </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>elc <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"efb650_data/elc.shp"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Digital elevation model </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"efb650_data/dem.tif"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Rivers</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>rivers <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"efb650_data/rivers.shp"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Check spatial reference</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(elc)<span class="sc">==</span><span class="fu">crs</span>(dem)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject [ELC]</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>elc <span class="ot">&lt;-</span> <span class="fu">project</span>(elc, <span class="fu">crs</span>(rivers))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(elc)<span class="sc">==</span><span class="fu">crs</span>(rivers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>asdf</p>
+</section>
+<section id="plotting-spatial-objects-with-ggplot2-1" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-spatial-objects-with-ggplot2-1">2. Plotting Spatial Objects with <code>ggplot2</code></h3>
+<p>We can again use <code>tidyterra</code> to plot the raster and vector data. Additionally, we can use built-in palettes from <code>tidyterra</code> to adjust the color of the raster.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aspect</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dem_a <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dem, <span class="at">v=</span><span class="st">"aspect"</span>, <span class="at">neighbors=</span><span class="dv">8</span>, <span class="at">unit=</span><span class="st">"radians"</span>) </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick plot to visualize</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dem_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the raster by itself</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>dem) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_cross_blended_c</span>(<span class="at">palette=</span><span class="st">"cold_humid"</span>) <span class="co"># adjust the color scale using tidyterra</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Some other cross blended color palettes are: "arid", "polar", and "warm_humid"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all three layers together</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>dem) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_cross_blended_c</span>(<span class="at">palette=</span><span class="st">"cold_humid"</span>) <span class="sc">+</span> </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>elc, <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"gray40"</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>rivers, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="raster-based-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="raster-based-analysis-1">3. Raster-based Analysis</h3>
+<p>We first want to convert the [ELC] polygon to a raster grid, using the moose suitability values as the raster values. We use the [DEM] raster as a template for cell size in our conversion.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, take a look at the ELC layer as viewed by moose</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatvector</span>(<span class="at">data=</span>elc, <span class="fu">aes</span>(<span class="at">fill=</span><span class="fu">factor</span>(MOOSE)))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert polygon to raster</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>moose <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(elc, dem, <span class="at">field=</span><span class="st">"MOOSE"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># quick look</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(moose)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the SpatRaster info</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>moose</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>dem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The legend shows landscape classes, but we only have the class number, which is not particularly informative. We can relabel the moose raster to better reflect suitability.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up raster values and classes</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>moose_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>moose_class <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Poor"</span>, <span class="st">"Low"</span>, <span class="st">"Fair"</span>, <span class="st">"Good"</span>, <span class="st">"High"</span>, <span class="st">"Water"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add class names and numbers to the raster</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(moose) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">data.frame</span>(<span class="at">ID =</span> moose_values,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">suitability =</span> moose_class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that we have the class labels, we want to specify a color for each level using <code>terra</code>’s color table functionality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify colors by level</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>coltb <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span>moose_values, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"#d01c8b"</span>, <span class="st">"#f1b6da"</span>, <span class="st">"#f7f7f7"</span>, <span class="st">"#b8e186"</span>, <span class="st">"#4dac26"</span>, <span class="st">"#0570b0"</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add color table</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(moose) <span class="ot">&lt;-</span> coltb</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot, filling raster cells by color</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>moose) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note that we have to specify data for the color table again</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_coltab</span>(<span class="at">data=</span>moose, <span class="at">na.translate =</span> <span class="cn">FALSE</span>, <span class="at">name=</span><span class="st">"Suitability"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we want to convert the dominant vegetation column from [ELC] from polygon to raster the same way we did for <code>moose</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, create a raster based on dominant vegetation</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>domveg <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(elc, dem, <span class="at">field=</span><span class="st">"DOMVEG"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot, and note that because the column in the vector was categorical, we don't have to change the raster from numeric values to categorical</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(domveg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The moose raster only has 6 different values, but sometimes we want fewer categories for analyses. Take a look at the <code>DOMVEG</code> column of [ELC]. For example, sometimes a class might only have a few cells. We can use a histogram or the <code>freq()</code> function to see how many cells fall into each vegetation type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency table</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(domveg)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(domveg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s combine these 10 classes into just 4: meadow, shrubs, forest, and non-vegetated, since there’s a few smaller classes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the levels of the raster</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(domveg)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create vector of new labels</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>veg_class <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Meadow"</span>,<span class="st">"Shrub"</span>,<span class="st">"Forest"</span>,<span class="st">"Forest"</span>,<span class="st">"Meadow"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Nonvegetated"</span>,<span class="st">"Forest"</span>, <span class="st">"Forest"</span>,<span class="st">"Forest"</span>, <span class="st">"Shrub"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add class names and numbers to the raster</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(domveg) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">data.frame</span>(<span class="at">ID =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domveg =</span> veg_class))</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(domveg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can perform focal statistics to understand aspects of the rasters. The functionality of focal statistics in <code>terra</code> seems a bit limited relative to ArcGIS. There is a <code>focal()</code> function, but the functions are more limited.</p>
+<p>Similarly, finding line density is much simpler in ArcGIS. However, we can create a distance raster similar to what we generated in ArcGIS without much effort.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First create a template raster, using the extent of the [RIVERS] shapefile, and a resolution of 30m</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">rast</span>(rivers, <span class="at">resolution=</span><span class="dv">30</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># We can't visualize this by plotting...there's nothing in the raster, but we can add the vals argument and then visualize the new raster (this draws a number from a normal distribution for each cell...749700 the lengtt x width of the raster extent)</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rivers, <span class="at">resolution=</span><span class="dv">30</span>, <span class="at">vals=</span><span class="fu">rnorm</span>(<span class="dv">749700</span>))</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The distance function will calculate the distance from the center of each cell to the closest part of the line </span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>distance_raster <span class="ot">&lt;-</span> <span class="fu">distance</span>(temp_rast, rivers)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="surface-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="surface-analysis-1">4. Surface Analysis</h3>
+<p>Digital elevation models are often used in analysis. Sometimes it is more useful to visualize as a hillshade, or the shaded relief, or other aspects of the terrain. <code>terra</code> requires us to first calculate the slope and aspect of the DEM (in radians), but we can then combine those into a hillshade layer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use terrain function to create new rasters with slope and aspect (in radians!)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>dem_s <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dem, <span class="at">v=</span><span class="st">"slope"</span>, <span class="at">neighbors=</span><span class="dv">8</span>, <span class="at">unit=</span><span class="st">"radians"</span>) </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick plot to visualize</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dem_s)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Aspect</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>dem_a <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dem, <span class="at">v=</span><span class="st">"aspect"</span>, <span class="at">neighbors=</span><span class="dv">8</span>, <span class="at">unit=</span><span class="st">"radians"</span>) </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick plot to visualize</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dem_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now create the hillshade.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Use slope and aspect to create hillshade</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hill <span class="ot">&lt;-</span> <span class="fu">shade</span>(<span class="at">slope=</span>dem_s, <span class="at">aspect=</span>dem_a, <span class="at">angle=</span><span class="dv">40</span>, <span class="at">direction=</span><span class="dv">270</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hill)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># but first, make a palette</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>pal_greys <span class="ot">&lt;-</span> <span class="fu">hcl.colors</span>(<span class="dv">1000</span>, <span class="st">"Grays"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>hill) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> pal_greys, <span class="at">na.value =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use slope and aspect to create hillshade</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>hill <span class="ot">&lt;-</span> <span class="fu">shade</span>(<span class="at">slope=</span>dem_s, <span class="at">aspect=</span>dem_a, <span class="at">angle=</span><span class="dv">40</span>, <span class="at">direction=</span><span class="dv">270</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hill)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># but first, make a palette</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>pal_greys <span class="ot">&lt;-</span> <span class="fu">hcl.colors</span>(<span class="dv">1000</span>, <span class="st">"Grays"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>hill) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors =</span> pal_greys, <span class="at">na.value =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The 3rd and 4th arguments we included, <code>angle</code> and <code>direction</code> are the elevation angle of the light source (i.e., the sun), in degrees, and the direction of the light source, also in degrees. Try changing these values to see how the hillshade changes. Note that you can save the hillshade directly by adding the <code>filename</code> argument.</p>
+<p>The 3rd and 4th arguments we included, <code>angle</code> and <code>direction</code> are the elevation angle of the light source (i.e., the sun), in degrees, and the direction of the light source, also in degrees. Try changing these values to see how the hillshade changes. Compare these parameters to the ones we saw in ArcGIS Pro. You can save the hillshade directly by adding the <code>filename</code> argument.</p>
+</section>
+<section id="create-a-final-map-1" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-final-map-1">5. Create a Final Map</h3>
+<p>We can plot the moose suitability on top of the hillshade layer, and add a scale bar and north arrow using the <code>ggspatial</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>hill, <span class="at">show.legend=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors=</span>pal_greys, <span class="at">na.value=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_scale_fill</span>() <span class="sc">+</span> <span class="co"># ggnewscale package, separate palettes for hillshade and moose suitability</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data=</span>moose, <span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_coltab</span>(<span class="at">data=</span>moose, <span class="at">name=</span><span class="st">"Suitability"</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">which_north =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.01</span>, <span class="st">"npc"</span>),</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"npc"</span>),</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">north_arrow_minimal</span>()) <span class="sc">+</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fu">unit</span>(<span class="fl">0.02</span>, <span class="st">"npc"</span>),</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">width_hint =</span> <span class="fl">0.4</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_x =</span> <span class="fu">unit</span>(<span class="fl">0.05</span>, <span class="st">"npc"</span>),</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">pad_y =</span> <span class="fu">unit</span>(<span class="fl">0.08</span>, <span class="st">"npc"</span>), </span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cex =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 </section>
