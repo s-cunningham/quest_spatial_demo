@@ -206,16 +206,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now, we want to put a buffer around the campsites, but we will need to adjust the buffer size based on campsite size. Larger campsites with greater capacity will take up more space and be more disruptive than smaller campsites with lower capacities. Therefore, we need to add a column to the attribute table that specifies the buffer size we want for our buffer. Open the attribute table for [CAMP] again. In the top left corner, there will be a button next to <strong>Field:</strong>. Click that.</p>
 <p><img src="images/Screenshot%202025-03-18%20131813.png" class="img-fluid"></p>
-<p>asdf</p>
-<p>We can add an empty</p>
+<p>We can add an empty column to the attribute table.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot%202025-03-18%20132147.png" class="img-fluid figure-img"></p>
 <figcaption>Note that the save button is all the way at the top</figcaption>
 </figure>
 </div>
-<p>After we click save, we still have an empty column. We will</p>
-<p>We are going to use a threshold of 10 campers to determine whether each size gets a 100 m or 200 m buffer. That is, anything less than or equal to 10 will have a buffer size of 100, and anything larger will have a buffer size of 200. Right click on the BUFFER column and select <strong>Calculate Field</strong>.</p>
+<p>After we click save, we still have an empty column. We are going to use a threshold of 10 campers to determine whether each size gets a 100 m or 200 m buffer. That is, anything less than or equal to 10 will have a buffer size of 100, and anything larger will have a buffer size of 200. We can select by Attribute to highlight campsites with capacity less than or equal to 10.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Screenshot%202025-03-18%20131316.png" class="img-fluid figure-img"></p>
+<figcaption>Select by attributes</figcaption>
+</figure>
+</div>
+<p>Returning to the Attribute Table, right click on the new BUFFER column and click on Calculate Field.</p>
 <p><img src="images/Screenshot%202025-03-18%20132318.png" class="img-fluid"></p>
 <p>After entering 100, hit OK. Then, in the same menu bar where you added the field, click Switch.</p>
 <p><img src="images/Screenshot%202025-03-18%20132355.png" class="img-fluid"></p>
@@ -224,11 +229,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now you can close the attribute table and go to the Geoprocessing toolbox. Open Pairwise Buffer again.</p>
 <p><img src="images/Screenshot%202025-03-18%20132618-01.png" class="img-fluid"></p>
 <p>Make sure Case Field is blank! It seems to autofill.</p>
-<p>Note that we have to recalculate the area after clipping…otherwise it retains the area of the full polygon.</p>
+<p>Next we need to combine the two buffer layers. We do that using the Union tool in the Analysis Tools toolbox.</p>
+<p><img src="images/Screenshot%202025-03-21%20093405.png" class="img-fluid"></p>
+<p>When we union the polygons, we see some of the boundaries between the two layers. We can use Pairwise Dissolve to remove these.</p>
+<p><img src="images/Screenshot%202025-03-21%20094027.png" class="img-fluid"></p>
+<p>Now that we have a single buffer layer, we want to find the area. If we open the attribute table, it should show us the area already calculated. However, it is in m<sup>2</sup>, which is a little hard to visualize. Add another column to the Attribute Table, making sure to set the Data Type to Double. After saving the new column, return to the Attribute Table and right click on the new area column. Select Calculate Geometry. Select the new area column under field, and Area under Property. Set the area unit to Square Kilometers and select the correct CRS. Click ok.</p>
+<p><img src="images/Screenshot%202025-03-19%20092418.png" class="img-fluid"></p>
+<p>We see that the area has been recalculated and returned in km<sup>2</sup>. Note that in this column, we can see what happens when we calculate the area, but do not set the Data Type to double (the value is rounded).</p>
+<p><img src="images/Screenshot%202025-03-19%20092641.png" class="img-fluid"></p>
+<p>Now we want to look at how much of the suitable area for wolverines is going to be affected by the disturbed area. In Symbology for the [ELC] layer, select WOLVERINE from the Field 1 drop-down menu.</p>
+<p><img src="images/Screenshot%202025-03-21%20095614.png" class="img-fluid"></p>
+<p>Values 1-5 represent landscape suitability, while 7 is water. We want to only consider the areas with the greatest suitability, so we will use Select by Attributes to create a new layer for only classes 4 and 5.</p>
+<p><img src="images/Screenshot%202025-03-19%20114735.png" class="img-fluid"></p>
+<p>After selecting the polygons with these values, right click on [ELC] and go to Selection &gt; Create layer from selected features. Turn off [ELC] and look at the new polygon.</p>
+<p><img src="images/Screenshot%202025-03-19%20114822.png" class="img-fluid"></p>
+<p>Now we will clip this suitable wolverine area by the disturbance polygon.</p>
+<p>In the Geoprocessing pane, search for Pairwise Clip. The input feature, or our selected wolverine suitability classes, will be the layer that is clipped, while the Clip Feature is the “cookie cutter” layer.</p>
+<p><img src="images/Screenshot%202025-03-19%20120244.png" class="img-fluid"></p>
+<p>It should look like this:</p>
+<p><img src="images/Screenshot%202025-03-19%20120304.png" class="img-fluid"></p>
+<p>Now that we have the wolverine habitat that is going to be affected by the disturbance, we want to find out how much area that is. We will need to recalculate the area for the clipped layer (otherwise it retains the area of the full polygon).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot%202025-03-19%20120701.png" class="img-fluid figure-img"></p>
-<figcaption>Wolverine area disturbed (in sq km)</figcaption>
+<figcaption>Wolverine area being disturbed (in sq km)</figcaption>
 </figure>
 </div>
 </section>
@@ -251,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="symbology-1" class="level3">
 <h3 class="anchored" data-anchor-id="symbology-1">2. Symbology</h3>
-<p>Uncheck ELC temporarily. Let’s look at the default symbology for the rivers shapefile and DEM raster.</p>
+<p>Uncheck [ELC] temporarily. Let’s look at the default symbology for the rivers shapefile and DEM raster.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot%202025-03-18%20102356.png" class="img-fluid figure-img"></p>
@@ -262,32 +286,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot%202025-03-18%20104523.png" class="img-fluid figure-img"></p>
-<figcaption>Better</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Screenshot%202025-03-18%20131151.png" class="img-fluid figure-img"></p>
-<figcaption>Opening the attribute table</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Screenshot%202025-03-18%20131316.png" class="img-fluid figure-img"></p>
-<figcaption>Select by attributes</figcaption>
+<figcaption>Better…ish</figcaption>
 </figure>
 </div>
 </section>
 <section id="raster-based-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="raster-based-analysis">3. Raster-based Analysis</h3>
+<p>We want to now consider the landscape from the perspective of a moose. Turn [ELC] back on and change the Symbology so that we are looking at the MOOSE field. Next, we want to covert the polygon to a raster, with the MOOSE values being represented by the cell values. You will find the Polygon to Raster tool in Geoprocessing. We will use the [DEM] raster as a template so that the new MOOSE raster also has 30 m cells.</p>
+<p><img src="images/Screenshot%202025-03-19%20121555.png" class="img-fluid"></p>
+<p>We want to now add labels to the raster values so they are something more informative than abstract numbers. Open Symbology for the MOOSE raster and fill in the label column. You might also change the color scheme.</p>
+<p><img src="images/Screenshot%202025-03-19%20122029.png" class="img-fluid"></p>
+<p>We also want to rasterize the DOMVEG column from [ELC].</p>
+<p><img src="images/Screenshot%202025-03-19%20122130.png" class="img-fluid"></p>
+<p>Note that we now have a categorical raster instead of an integer raster that we added labels to. If you look at the classes for DOMVEG, we see there are many, but some of them might not be actually useful. Search for the Reclassify tool in Geoprocessing, and we will collapse some of these categories into classes that are more general.</p>
+<p><img src="images/Screenshot%202025-03-19%20122431.png" class="img-fluid"></p>
+<p>We have to replace the categorical values with a number, but we can relabel it later. (1 = Meadow, 2 = Shrub, 3 = Forest, and 4 = Nonvegetated)</p>
+<p><img src="images/Screenshot%202025-03-19%20122558.png" class="img-fluid"></p>
+<p>We can do some other fun stuff to change the form of our vector data including calculating the density of rivers:</p>
+<p><img src="images/Screenshot%202025-03-19%20155245.png" class="img-fluid"></p>
+<p>Or creating a raster showing the distance to rivers across the study area:</p>
+<p><img src="images/Screenshot%202025-03-19%20155929.png" class="img-fluid"></p>
+<p>And also use Focal Statistics to assess the diversity of vegetation types within a moving window:</p>
+<p><img src="images/Screenshot%202025-03-20%20135853.png" class="img-fluid"></p>
 </section>
 <section id="surface-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="surface-analysis">4. Surface Analysis</h3>
-<p>Analysis Tab &gt; Raster Functions &gt; Surface &gt; Hillshade</p>
+<p>Digital elevation models are often used in analysis. Sometimes it is more useful to visualize as a hillshade, or the shaded relief, or other aspects of the terrain. There is a separate set of tools called Raster Functions, which can be found along the top of the Analysis tab. Navigate to Analysis Tab &gt; Raster Functions &gt; Surface &gt; Hillshade.</p>
 <p><img src="images/Screenshot%202025-03-20%20110756.png" class="img-fluid"></p>
+<p>The Hillshade tool will open.</p>
+<p><img src="images/Screenshot%202025-03-20%20110845.png" class="img-fluid"></p>
 </section>
 <section id="create-a-final-map" class="level3">
 <h3 class="anchored" data-anchor-id="create-a-final-map">5. Create a Final Map</h3>
+<p>In order to create a map, we need to go to Insert &gt; New Layout. We use the Map Frame button on the far left to add the map, then use the other options in the middle fo the ribbon to add scale bars, legends, and north arrows.</p>
+<p><img src="images/Screenshot%202025-03-18%20133149.png" class="img-fluid"></p>
 </section>
 </section>
 </section>

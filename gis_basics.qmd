@@ -74,8 +74,6 @@ Now, we want to put a buffer around the campsites, but we will need to adjust th
 
 ![](images/Screenshot%202025-03-18%20131813.png)
 
-asdf
-
 We can add an empty column to the attribute table.
 
 ![Note that the save button is all the way at the top](images/Screenshot%202025-03-18%20132147.png)
@@ -102,9 +100,47 @@ Now you can close the attribute table and go to the Geoprocessing toolbox. Open 
 
 Make sure Case Field is blank! It seems to autofill.
 
-Note that we have to recalculate the area after clipping...otherwise it retains the area of the full polygon.
+Next we need to combine the two buffer layers. We do that using the Union tool in the Analysis Tools toolbox.
 
-![Wolverine area disturbed (in sq km)](images/Screenshot%202025-03-19%20120701.png)
+![](images/Screenshot 2025-03-21 093405.png)
+
+When we union the polygons, we see some of the boundaries between the two layers. We can use Pairwise Dissolve to remove these.
+
+![](images/Screenshot 2025-03-21 094027.png)
+
+Now that we have a single buffer layer, we want to find the area. If we open the attribute table, it should show us the area already calculated. However, it is in m^2^, which is a little hard to visualize. Add another column to the Attribute Table, making sure to set the Data Type to Double. After saving the new column, return to the Attribute Table and right click on the new area column. Select Calculate Geometry. Select the new area column under field, and Area under Property. Set the area unit to Square Kilometers and select the correct CRS. Click ok.
+
+![](images/Screenshot 2025-03-19 092418.png)
+
+We see that the area has been recalculated and returned in km^2^. Note that in this column, we can see what happens when we calculate the area, but do not set the Data Type to double (the value is rounded).
+
+![](images/Screenshot 2025-03-19 092641.png)
+
+Now we want to look at how much of the suitable area for wolverines is going to be affected by the disturbed area. In Symbology for the \[ELC\] layer, select WOLVERINE from the Field 1 drop-down menu.
+
+![](images/Screenshot 2025-03-21 095614.png)
+
+Values 1-5 represent landscape suitability, while 7 is water. We want to only consider the areas with the greatest suitability, so we will use Select by Attributes to create a new layer for only classes 4 and 5.
+
+![](images/Screenshot 2025-03-19 114735.png)
+
+After selecting the polygons with these values, right click on \[ELC\] and go to Selection \> Create layer from selected features. Turn off \[ELC\] and look at the new polygon.
+
+![](images/Screenshot 2025-03-19 114822.png)
+
+Now we will clip this suitable wolverine area by the disturbance polygon.
+
+In the Geoprocessing pane, search for Pairwise Clip. The input feature, or our selected wolverine suitability classes, will be the layer that is clipped, while the Clip Feature is the "cookie cutter" layer.
+
+![](images/Screenshot 2025-03-19 120244.png)
+
+It should look like this:
+
+![](images/Screenshot 2025-03-19 120304.png)
+
+Now that we have the wolverine habitat that is going to be affected by the disturbance, we want to find out how much area that is. We will need to recalculate the area for the clipped layer (otherwise it retains the area of the full polygon).
+
+![Wolverine area being disturbed (in sq km)](images/Screenshot%202025-03-19%20120701.png)
 
 ## Part II: Raster Data
 
@@ -128,7 +164,7 @@ Make sure to check spatial references and reproject the \[ELC\] layer again!
 
 ### 2. Symbology
 
-Uncheck ELC temporarily. Let's look at the default symbology for the rivers shapefile and DEM raster.
+Uncheck \[ELC\] temporarily. Let's look at the default symbology for the rivers shapefile and DEM raster.
 
 ![Yikes](images/Screenshot%202025-03-18%20102356.png)
 
@@ -136,9 +172,39 @@ Let's change that elevation to a terrain palette. Go to the Symbology tab and cl
 
 ![Better...ish](images/Screenshot%202025-03-18%20104523.png)
 
-![](images/Screenshot%202025-03-18%20131151.png)
-
 ### 3. Raster-based Analysis
+
+We want to now consider the landscape from the perspective of a moose. Turn \[ELC\] back on and change the Symbology so that we are looking at the MOOSE field. Next, we want to covert the polygon to a raster, with the MOOSE values being represented by the cell values. You will find the Polygon to Raster tool in Geoprocessing. We will use the \[DEM\] raster as a template so that the new MOOSE raster also has 30 m cells.
+
+![](images/Screenshot 2025-03-19 121555.png)
+
+We want to now add labels to the raster values so they are something more informative than abstract numbers. Open Symbology for the MOOSE raster and fill in the label column. You might also change the color scheme.
+
+![](images/Screenshot 2025-03-19 122029.png)
+
+We also want to rasterize the DOMVEG column from \[ELC\].
+
+![](images/Screenshot 2025-03-19 122130.png)
+
+Note that we now have a categorical raster instead of an integer raster that we added labels to. If you look at the classes for DOMVEG, we see there are many, but some of them might not be actually useful. Search for the Reclassify tool in Geoprocessing, and we will collapse some of these categories into classes that are more general.
+
+![](images/Screenshot 2025-03-19 122431.png)
+
+We have to replace the categorical values with a number, but we can relabel it later. (1 = Meadow, 2 = Shrub, 3 = Forest, and 4 = Nonvegetated)
+
+![](images/Screenshot 2025-03-19 122558.png)
+
+We can do some other fun stuff to change the form of our vector data including calculating the density of rivers:
+
+![](images/Screenshot 2025-03-19 155245.png)
+
+Or creating a raster showing the distance to rivers across the study area:
+
+![](images/Screenshot 2025-03-19 155929.png)
+
+And also use Focal Statistics to assess the diversity of vegetation types within a moving window:
+
+![](images/Screenshot 2025-03-20 135853.png)
 
 ### 4. Surface Analysis
 
@@ -148,7 +214,13 @@ Digital elevation models are often used in analysis. Sometimes it is more useful
 
 The Hillshade tool will open.
 
+![](images/Screenshot 2025-03-20 110845.png)
+
 ### 5. Create a Final Map
+
+In order to create a map, we need to go to Insert \> New Layout. We use the Map Frame button on the far left to add the map, then use the other options in the middle fo the ribbon to add scale bars, legends, and north arrows.
+
+![](images/Screenshot 2025-03-18 133149.png)
 
 # Using R (v. 4.4.2)
 
