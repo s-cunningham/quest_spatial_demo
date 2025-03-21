@@ -305,20 +305,20 @@ ggplot() +
   geom_spatraster(data=hill, show.legend=FALSE) +
   scale_fill_gradientn(colors=pal_greys, na.value=NA) +
   new_scale_fill() + # ggnewscale package
-  geom_spatraster(data=moose, alpha=0.5, na.rm=TRUE) + #use_coltab=TRUE, 
+  geom_spatraster(data=moose, alpha=0.4, na.rm=TRUE) + #use_coltab=TRUE, 
   scale_fill_coltab(data=moose, name="Suitability") +
-  theme(legend.position=c(0.92,0.8),
-        legend.justification=c(1,1)) +
+  theme(legend.position=c(0.05,0.95),
+        legend.justification=c(0,1)) +
   annotation_north_arrow(
     which_north = TRUE,
-    pad_x = unit(0.05, "npc"),
-    pad_y = unit(0.7, "npc"),
+    pad_x = unit(0.01, "npc"),
+    pad_y = unit(0.15, "npc"),
     style = north_arrow_minimal()) +
   annotation_scale(
     height = unit(0.02, "npc"),
     width_hint = 0.4,
-    pad_x = unit(0.1, "npc"),
-    pad_y = unit(0.85, "npc"), #0.07
+    pad_x = unit(0.05, "npc"),
+    pad_y = unit(0.08, "npc"), #0.07
     text_cex = 1)
 
 
